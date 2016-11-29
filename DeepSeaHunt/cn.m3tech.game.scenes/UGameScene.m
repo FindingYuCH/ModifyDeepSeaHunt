@@ -3093,4 +3093,12 @@ static UGameScene *sharedGameScene;
     }
 }
 
+- (void)onEnterTransitionDidFinish{
+    
+    if (gameState == kGameStateForMenu) {
+        
+        [self gamePause];
+    }
+}
+
 @end

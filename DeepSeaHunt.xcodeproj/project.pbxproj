@@ -842,6 +842,7 @@
 		A02A93481DED754000F775E2 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A02A93471DED754000F775E2 /* libsqlite3.0.tbd */; };
 		A02A934A1DED754C00F775E2 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A02A93491DED754C00F775E2 /* libxml2.tbd */; };
 		A02A934C1DED755A00F775E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A02A934B1DED755A00F775E2 /* libz.tbd */; };
+		A02A934E1DED847A00F775E2 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02A934D1DED847A00F775E2 /* UMMobClick.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1864,6 +1865,7 @@
 		A02A93471DED754000F775E2 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		A02A93491DED754C00F775E2 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		A02A934B1DED755A00F775E2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		A02A934D1DED847A00F775E2 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1871,6 +1873,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A02A934E1DED847A00F775E2 /* UMMobClick.framework in Frameworks */,
 				A02A934C1DED755A00F775E2 /* libz.tbd in Frameworks */,
 				A02A934A1DED754C00F775E2 /* libxml2.tbd in Frameworks */,
 				A02A93481DED754000F775E2 /* libsqlite3.0.tbd in Frameworks */,
@@ -1965,8 +1968,8 @@
 			children = (
 				9215DFC81553A23D004E541F /* GameDefine.h */,
 				3F8556E415DB8E7D00F4DCE4 /* CCDirector_.h */,
-				3F2EBEBA15DCA0240011A000 /* AppDelegate.h */,
 				3F8556E515DB8E7D00F4DCE4 /* CCDirector_.m */,
+				3F2EBEBA15DCA0240011A000 /* AppDelegate.h */,
 				3F2EBEBB15DCA0240011A000 /* AppDelegate.m */,
 			);
 			name = cn.akn.game;
@@ -2032,6 +2035,7 @@
 				9D1DAABE165CC289006347B4 /* Default-Landscape~ipad.png */,
 				9D1DAABA165CC263006347B4 /* Default@2x.png */,
 				9D1DAAB8165CC248006347B4 /* Default.png */,
+				A02A934D1DED847A00F775E2 /* UMMobClick.framework */,
 				92A83C2B15528C1F003D0477 /* DeepSeaHunt */,
 				92A83C1815528C1F003D0477 /* Frameworks */,
 				92A83C1615528C1F003D0477 /* Products */,
@@ -3027,8 +3031,8 @@
 				9D27DE9A163148C70036A754 /* UHelpScene.h */,
 				9D27DE9B163148C70036A754 /* UHelpScene.m */,
 				9D1F2E291634DC38009FF2EC /* UGameScene.h */,
-				9D2ADA5116781B80005B2C69 /* UAboutScene.h */,
 				9D1F2E2A1634DC38009FF2EC /* UGameScene.m */,
+				9D2ADA5116781B80005B2C69 /* UAboutScene.h */,
 				9D2ADA5216781B81005B2C69 /* UAboutScene.m */,
 				9D1C114F17379DA700B7E240 /* UGameSceneChoice.h */,
 				9D1C115017379DA700B7E240 /* UGameSceneChoice.m */,
@@ -3369,6 +3373,7 @@
 				TargetAttributes = {
 					92A83C1415528C1F003D0477 = {
 						DevelopmentTeam = AFD9L3PD9K;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -4262,9 +4267,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Linhai Chen (62K6Y85M94)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Linhai Chen (62K6Y85M94)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = DeepSeaHunt/Prefix.pch;
@@ -4313,7 +4322,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "23db1a98-0d8a-4595-8891-5e158d43d69c";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "23db1a98-0d8a-4595-8891-5e158d43d69c";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
@@ -4330,9 +4339,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Linhai Chen (62K6Y85M94)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Linhai Chen (62K6Y85M94)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = DeepSeaHunt/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"DeepSeaHunt/libs/kazmath/include\"";
@@ -4379,7 +4392,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "23db1a98-0d8a-4595-8891-5e158d43d69c";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "23db1a98-0d8a-4595-8891-5e158d43d69c";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

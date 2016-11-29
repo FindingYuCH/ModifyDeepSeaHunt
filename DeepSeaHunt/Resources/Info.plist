@@ -46,8 +46,23 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>2.2.3</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>baidumobads</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>总是定位</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>定位</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>允许访问资料媒体库</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -63,6 +78,8 @@
 		<key>opengles-2</key>
 		<true/>
 	</dict>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIStatusBarHidden~ipad</key>
@@ -79,14 +96,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>baidumobads</string>
-	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 </dict>
 </plist>

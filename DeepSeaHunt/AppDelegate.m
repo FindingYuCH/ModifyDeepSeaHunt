@@ -16,12 +16,48 @@
 //#import "MobClick.h"
 //#import "UMSocialData.h"
 //#import "UMSocialSnsService.h"
+
+#import "UMMobClick/MobClick.h"
+
 @implementation AppController
 
 @synthesize window=window_, navController=navController_, director=director_;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //友盟集成测试的唯一id获取
+    Class cls = NSClassFromString(@"UMANUtil");
+    SEL deviceIDSelector = @selector(openUDIDString);
+    NSString *deviceID = nil;
+    if(cls && [cls respondsToSelector:deviceIDSelector]){
+        deviceID = [cls performSelector:deviceIDSelector];
+    }
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:nil];
+    NSLog(@"我的OpenID=====%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
+#pragma mrak=== 友盟集成
+    
+    //    [MobClick setLogEnabled:YES];
+    UMConfigInstance.appKey = @"5834f070310c934340001895";
+    //    UMConfigInstance.ChannelId = @"App Store";
+    //    UMConfigInstance.secret = @"secretstringaldfkals";
+    UMConfigInstance.eSType = E_UM_GAME;
+    [MobClick startWithConfigure:UMConfigInstance];
+    
+#pragma mark ====ios8之后的定位授权
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
+        //调用弹出允许定位框了.
+        [_locationManager requestWhenInUseAuthorization];
+        
+    };
+
+    
+    
+    
 	// Create the main window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
