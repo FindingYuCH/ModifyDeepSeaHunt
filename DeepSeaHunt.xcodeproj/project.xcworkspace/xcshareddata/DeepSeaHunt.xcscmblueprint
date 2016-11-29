@@ -1,21 +1,28 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7e84d325-0445-e540-ab36-e9108b108006++5359",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "3E01EA150183F41E84AFBCFA497AD5962A2116E9",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
     "7e84d325-0445-e540-ab36-e9108b108006++5359" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "7e84d325-0445-e540-ab36-e9108b108006++5359" : 0
+    "7e84d325-0445-e540-ab36-e9108b108006++5359" : 0,
+    "3E01EA150183F41E84AFBCFA497AD5962A2116E9" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3CD45C61-3946-4CAC-A027-61224E79223D",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "7e84d325-0445-e540-ab36-e9108b108006++5359" : "DeepSeaHunt%20v2.2.2\/"
+    "7e84d325-0445-e540-ab36-e9108b108006++5359" : "DeepSeaHunt%20v2.2.2\/",
+    "3E01EA150183F41E84AFBCFA497AD5962A2116E9" : "deeperSeaHunt\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "DeepSeaHunt",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DeepSeaHunt.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/wx2.m3tech.cn:3000\/DJ\/deeperSeaHunt.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3E01EA150183F41E84AFBCFA497AD5962A2116E9"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/192.168.10.62\/svn\/techsrc",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
