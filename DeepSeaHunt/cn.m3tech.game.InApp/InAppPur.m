@@ -41,6 +41,8 @@
 	[self showWaitting];
 }
 
+#pragma mark ==显示风火轮(加载等待)
+
 -(void)showWaitting
 {   
     
@@ -80,6 +82,8 @@
 	
 }
 
+#pragma mark ==隐藏风火轮
+
 -(void)hideWaittiing
 {
 	[[_parent viewWithTag:123] removeFromSuperview];
@@ -118,6 +122,8 @@
 	[self purchaseProUpgrade];
 }
 
+
+#pragma mark ===加载支付
 
 - (void)loadStore:(int)ProductId
 {
@@ -162,6 +168,9 @@
 //
 // call this before making a purchase
 //
+
+#pragma mark ==内购
+
 - (BOOL)canMakePurchases
 {
     return [SKPaymentQueue canMakePayments];
