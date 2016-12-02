@@ -28,7 +28,7 @@
 @implementation UGameScene
 
 static int gameLevels[] = {100, 500, 1000, 2000, 3500,
-	6000, 10000, 20000, 50000, 100000};
+    6000, 10000, 20000, 50000, 100000};
 
 //金币
 static int golds[] = { 1, 2, 4, 7, 10, 15, 20, 30, 40, 50 };
@@ -39,8 +39,8 @@ static int exps[] = { 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5 };
 //每次升级的金币奖励
 static int levelUpGold[]={ 200, 250, 300, 400, 500, 600, 700, 800, 900,1000, 2000};
 static NSString *gameLevelName[] = {
-	@"新手上路", @"江湖小虾", @"明日之星", @"捕鱼能手", @"海上霸主",
-	@"隐士高手", @"绝世奇才", @"捕鱼高人", @"捕鱼大师", @"捕鱼达人", @"天下无敌"
+    @"新手上路", @"江湖小虾", @"明日之星", @"捕鱼能手", @"海上霸主",
+    @"隐士高手", @"绝世奇才", @"捕鱼高人", @"捕鱼大师", @"捕鱼达人", @"天下无敌"
 };
 
 static UGameScene *sharedGameScene;
@@ -56,16 +56,23 @@ static UGameScene *sharedGameScene;
 
 #define kAdViewPortraitRect CGRectMake(0, 0, kBaiduAdViewSizeDefaultWidth, kBaiduAdViewSizeDefaultHeight)
 
+
+
+
 + (id)scene:(int)p{
     CCScene *scene = [CCScene node];
     UGameScene *layer = [[UGameScene alloc] init:p];
     [scene addChild:layer];
-	return scene;
+    return scene;
 }
+
 +(UGameScene*)sharedScene
 {
     return sharedGameScene;
 }
+
+#pragma mark -- 初始化场景
+
 -(id)init:(int)p
 {
     if (self=[super init]) {
@@ -84,7 +91,7 @@ static UGameScene *sharedGameScene;
         
         gameingState=kGameingStateNormal;
         gameState=kGameStateForGameing;
-
+        
         bulletArray=[[NSMutableArray alloc] init];
         fishArray=[[NSMutableArray alloc] init];
         fishSchoolArray=[[NSMutableArray alloc] init];
@@ -93,16 +100,17 @@ static UGameScene *sharedGameScene;
         
         
         CCSprite *temBackGround;
-         if (GAME_SCENE_SIZE.width==568&&GAME_SCENE_SIZE.height==320) {
-             temBackGround=[CCSprite spriteWithFile:@"gamescene1-iphone5.png"];
-         }else{
-             temBackGround=[CCSprite spriteWithFile:@"gamescene1.png"];
-         }
+        if (GAME_SCENE_SIZE.width==568&&GAME_SCENE_SIZE.height==320) {
+            temBackGround=[CCSprite spriteWithFile:@"gamescene1-iphone5.png"];
+        }else{
+            temBackGround=[CCSprite spriteWithFile:@"gamescene1.png"];
+        }
         temBackGround.anchorPoint=CGPointZero;
         [self addChild:temBackGround z:-1];
-        
+#pragma mark 菜单按钮点击
+        //暂停菜单项
         CCMenuItem *temPauseItem=[CCMenuItemImage itemWithNormalImage:@"game_pause.png" selectedImage:@"game_pause_.png" target:self selector:@selector(showMenu)];
-        
+        //游戏截图菜单项
         CCMenuItem *temPhotoItem=[CCMenuItemImage itemWithNormalImage:@"game_photo.png" selectedImage:@"game_photo_.png"  target:self selector:@selector(gamePhoto)];
         
         temPauseItem.position=ccp(GAME_SCENE_SIZE.width-temPauseItem.contentSize.width,GAME_SCENE_SIZE.height-temPauseItem.contentSize.height*1.2);
@@ -116,7 +124,7 @@ static UGameScene *sharedGameScene;
         
         itemPhoto=temPhotoItem;
         itemPause=temPauseItem;
-
+        
         //初始化头像和等级
         if (isPad) {
             [self initHeadAndLv:CGPointMake(20, 640)];
@@ -124,8 +132,8 @@ static UGameScene *sharedGameScene;
             [self initHeadAndLv:CGPointMake(20, 260)];
         }
         
-//        CCSpriteBatchNode* bulletBatch = [CCSpriteBatchNode batchNodeWithFile:@"bullet6.png"];
-//        [self addChild:bulletBatch z:4 tag:kTagBulletBatch];
+        //        CCSpriteBatchNode* bulletBatch = [CCSpriteBatchNode batchNodeWithFile:@"bullet6.png"];
+        //        [self addChild:bulletBatch z:4 tag:kTagBulletBatch];
         
         //BatchNode
         CCSpriteBatchNode* showGetGoldBatch = [CCSpriteBatchNode batchNodeWithFile:@"game_money_icon.png"];
@@ -145,27 +153,27 @@ static UGameScene *sharedGameScene;
         
         
         [self initMenuLayer];
-///----去除mogo广告 dijk 2016-05-21
- /*       if (!isRemoveAD) {
-//            NSLog(@"没有去除广告!");
-            if (isPad) {
-                if (banner!=nil) {
-                    adState=kADStateForRun;
-                    [banner showAd];
-                }
-            }else{
-                if (banner!=nil) {
-                    [banner hideAd];
-                }
-            }
-        }else{
-//             NSLog(@"已去除广告!");
-        }
-  */
-//       [self getUpDateGoldFor2_2];
+        ///----去除mogo广告 dijk 2016-05-21
+        /*       if (!isRemoveAD) {
+         //            NSLog(@"没有去除广告!");
+         if (isPad) {
+         if (banner!=nil) {
+         adState=kADStateForRun;
+         [banner showAd];
+         }
+         }else{
+         if (banner!=nil) {
+         [banner hideAd];
+         }
+         }
+         }else{
+         //             NSLog(@"已去除广告!");
+         }
+         */
+        //       [self getUpDateGoldFor2_2];
     }
-  
-///----去除mogo广告 dijk 2016-05-21
+    
+    ///----去除mogo广告 dijk 2016-05-21
     
     ///dijk 2016-05-21 百度广告 启动广告，自定义开屏广告
     self.isInVideo = @"1";
@@ -248,20 +256,19 @@ static UGameScene *sharedGameScene;
         //[[[CCDirector sharedDirector] view]addSubview:banner.viewController.view];
     }
 }
+
 -(void)initRes
 {
     moneyForGold=[[CCSprite spriteWithFile:@"game_money_icon.png"] retain];
-    
-    
     
     fishSprireArr=[[NSMutableArray alloc] init];
     
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:
      @"fish.plist"];
-
+    
     for (int i=0; i<10; i++) {
         CCSpriteFrame *fishFrame=[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"fish%d.png", i]];
-//        CCSprite *fish=[CCSprite spriteWithFile:[NSString stringWithFormat:@"fish%d.png",i]];
+        //        CCSprite *fish=[CCSprite spriteWithFile:[NSString stringWithFormat:@"fish%d.png",i]];
         [fishSprireArr addObject:fishFrame];
     }
 }
@@ -269,8 +276,8 @@ static UGameScene *sharedGameScene;
 //-(CCSpriteBatchNode*)getBulletBatch
 //{
 //    CCNode* node = [self getChildByTag:kTagBulletBatch];
-//    NSAssert([node isKindOfClass:[CCSpriteBatchNode class]], @"not a SpriteBatch"); 
-//    
+//    NSAssert([node isKindOfClass:[CCSpriteBatchNode class]], @"not a SpriteBatch");
+//
 //    return (CCSpriteBatchNode*)node;
 //}
 
@@ -363,7 +370,7 @@ static UGameScene *sharedGameScene;
         headEffect.position=ccp(0,0);
     }
     
-
+    
     
     [exp setTextureRect:CGRectMake(0, 0, nowEXP/needEXP*exp.contentSize.width, exp.contentSize.height)];
     [headBack addChild:exp z:1];
@@ -378,7 +385,7 @@ static UGameScene *sharedGameScene;
         return;
     }
     
-   NSData* temDate= [USave readGameData:kRecordTypeForGetFreeGold];
+    NSData* temDate= [USave readGameData:kRecordTypeForGetFreeGold];
     if (temDate!=NULL) {
         RecordForGetFreeGoldData* temGetFreeGoldData=(RecordForGetFreeGoldData*)[temDate bytes];
         if (temGetFreeGoldData) {
@@ -409,7 +416,7 @@ static UGameScene *sharedGameScene;
             [self schedule:@selector(getFreeTimeControl) interval:1.0f];
         }
         
-       
+        
     }else{//记录为空就重新开始到计时
         getNum=0;
         getFreeTimeNum=kGetFreeTime;
@@ -423,30 +430,30 @@ static UGameScene *sharedGameScene;
         [getFreeGoldTimeLabel setString:[NSString stringWithFormat:@"%02d/%02d",getFreeTimeNum/60,getFreeTimeNum%60]];
         [self schedule:@selector(getFreeTimeControl) interval:1.0f];
     }
-
+    
 }
 //判断是否可以再进行领取免费金币
 - (BOOL)isGetFree
 {
     /*NSData* temDate= [USave readGameData:kRecordTypeForGetFreeGold];
-    if (!temDate) {
-        return TRUE;
-    }else{
-        RecordForGetFreeGoldData* temGetFreeGoldData=(RecordForGetFreeGoldData*)[temDate bytes];
-        if (!temGetFreeGoldData) {
-            return TRUE;
-        }
-        //判断是否是今天  非今天则重新计算  并进行记录
-        if (temGetFreeGoldData->date==[self getNowDate]) {
-            if (temGetFreeGoldData->num<3) {
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return true;
-        }
-    }*/
+     if (!temDate) {
+     return TRUE;
+     }else{
+     RecordForGetFreeGoldData* temGetFreeGoldData=(RecordForGetFreeGoldData*)[temDate bytes];
+     if (!temGetFreeGoldData) {
+     return TRUE;
+     }
+     //判断是否是今天  非今天则重新计算  并进行记录
+     if (temGetFreeGoldData->date==[self getNowDate]) {
+     if (temGetFreeGoldData->num<3) {
+     return true;
+     }else{
+     return false;
+     }
+     }else{
+     return true;
+     }
+     }*/
     return false;
 }
 //保存当前的倒计时数据
@@ -464,7 +471,7 @@ static UGameScene *sharedGameScene;
     
     return y*10000+m*100+d;
 }
-//再线领取金币计时
+//在线领取金币计时
 - (void)getFreeTimeControl
 {
     if (getFreeTimeNum>0) {
@@ -513,6 +520,9 @@ static UGameScene *sharedGameScene;
     }
     
 }
+
+#pragma mark ==金币特效
+
 - (void)freeGoldEffect:(int)num pos:(CGPoint)point
 {
     int goldW,goldH,timeNum;
@@ -531,7 +541,7 @@ static UGameScene *sharedGameScene;
         destination= CGPointMake(20, 20);
         
     }
-
+    
     for (int i=0; i<5; i++) {//(point+(i-num/2)*goldW)
         if (isPad) {
             moveUp= CGPointMake(0, arc4random()%30+30);
@@ -583,6 +593,9 @@ static UGameScene *sharedGameScene;
     
     
 }
+
+#pragma mark ==显示头像和等级
+
 -(void)showHeadAndLevel
 {
     id temMove=[CCMoveTo actionWithDuration:0.5f position:ccp(20,260)];
@@ -592,17 +605,26 @@ static UGameScene *sharedGameScene;
     }
     [self scheduleOnce:@selector(ADControl) delay:kTimeWarttingAD];
 }
+
+#pragma mark == 隐藏头像和等级
+
 -(void)hideHeadAndLevel
 {
     id temMove=[CCMoveTo actionWithDuration:0.5f position:ccp(-[self getChildByTag:kTagHeadBack].contentSize.width*1.5,[self getChildByTag:kTagHeadBack].position.y)];
     [[self getChildByTag:kTagHeadBack] runAction:temMove];
 }
+
+#pragma mark = 显示广告
+
 -(void)showAD
 {
     [self showBannerAD];
     [self hideHeadAndLevel];
     [self scheduleOnce:@selector(hideAD) delay:kTimeShowAD];
 }
+
+#pragma mark ==隐藏广告
+
 -(void)hideAD
 {
     [self hideBannerAD];
@@ -612,17 +634,17 @@ static UGameScene *sharedGameScene;
 -(void)showBannerAD
 {
     /*
-    if (banner!=nil) {
-        if (adState!=kADStateForRun) {
-            return;
-        }
-        
-        [banner showAd];
-        
-        if (!isPad) {
-            [self hideHeadAndLevel];
-        }
-    }
+     if (banner!=nil) {
+     if (adState!=kADStateForRun) {
+     return;
+     }
+     
+     [banner showAd];
+     
+     if (!isPad) {
+     [self hideHeadAndLevel];
+     }
+     }
      */
     
     if(sharedAdView == nil){
@@ -649,16 +671,16 @@ static UGameScene *sharedGameScene;
 -(void)hideBannerAD
 {
     /*
-    if (banner!=nil) {
-        if (adState!=kADStateForRun) {
-            return;
-        }
-        [banner hideAd];
-        if (!isPad) {
-            id temMove=[CCMoveTo actionWithDuration:0.5f position:ccp(20,260)];
-            [[self getChildByTag:kTagHeadBack] runAction:temMove];
-        }
-    }
+     if (banner!=nil) {
+     if (adState!=kADStateForRun) {
+     return;
+     }
+     [banner hideAd];
+     if (!isPad) {
+     id temMove=[CCMoveTo actionWithDuration:0.5f position:ccp(20,260)];
+     [[self getChildByTag:kTagHeadBack] runAction:temMove];
+     }
+     }
      */
     ///dijk 2016-05-21 显示Banner广告
     if(sharedAdView != nil){
@@ -668,6 +690,9 @@ static UGameScene *sharedGameScene;
     
 }
 /// dijk 2016-05-21 去掉mogo广告
+
+#pragma mark ==界面初始化(部分) 炮台,雪,按钮等
+
 -(void)initConnon
 {
     //炮台背景
@@ -713,16 +738,16 @@ static UGameScene *sharedGameScene;
     temPower.position=ccp(temPowerBack.contentSize.width/2, temPowerBack.contentSize.height/2);
     [temPowerBack addChild:temPower];
     
-
+    
     connonBack.anchorPoint=CGPointZero;
     snow.anchorPoint=CGPointZero;
-     if (GAME_SCENE_SIZE.width==568&&GAME_SCENE_SIZE.height==320) {
-         temPowerBack.position=ccp(460, 12);
-     }else if (isPad){
-         temPowerBack.position=ccp(850, 25);
-     }else{
-         temPowerBack.position=ccp(400, 12);
-     }
+    if (GAME_SCENE_SIZE.width==568&&GAME_SCENE_SIZE.height==320) {
+        temPowerBack.position=ccp(460, 12);
+    }else if (isPad){
+        temPowerBack.position=ccp(850, 25);
+    }else{
+        temPowerBack.position=ccp(400, 12);
+    }
     
     [connonBack addChild:temPowerBack];
     
@@ -735,7 +760,7 @@ static UGameScene *sharedGameScene;
         deer.position=ccp(GAME_SCENE_SIZE.width-deer.contentSize.width,85);
     }else {
         snow.position=ccp(0,7);
-        deer.position=ccp(GAME_SCENE_SIZE.width-deer.contentSize.width,40); 
+        deer.position=ccp(GAME_SCENE_SIZE.width-deer.contentSize.width,40);
     }
     
     
@@ -755,7 +780,7 @@ static UGameScene *sharedGameScene;
     itemShop=temItemShop;
     
     //更多推荐按钮
-//    CCMenuItemImage *itemMore=[CCMenuItemImage itemWithNormalImage:@"more_game.png" selectedImage:@"more_game_.png"  target:self selector:@selector(more)];
+    //    CCMenuItemImage *itemMore=[CCMenuItemImage itemWithNormalImage:@"more_game.png" selectedImage:@"more_game_.png"  target:self selector:@selector(more)];
     if (GAME_SCENE_SIZE.width==568&&GAME_SCENE_SIZE.height==320) {
         temItemAdd.position=ccp(344,15);
         temItemDec.position=ccp(224,15);
@@ -766,15 +791,15 @@ static UGameScene *sharedGameScene;
         temItemDec.position=ccp(380,30);
         temItemShop.anchorPoint=CGPointZero;
         temItemShop.position=CGPointZero;
-
+        
     }else {
         temItemAdd.position=ccp(300,15);
         temItemDec.position=ccp(180,15);
         temItemShop.anchorPoint=CGPointZero;
         temItemShop.position=CGPointZero;
-
-//        itemMore.anchorPoint=CGPointZero;
-//        itemMore.position=ccp(430,3);
+        
+        //        itemMore.anchorPoint=CGPointZero;
+        //        itemMore.position=ccp(430,3);
     }
     
     
@@ -787,10 +812,10 @@ static UGameScene *sharedGameScene;
     
     CCAnimation *animation=[CCAnimation animation];
     [animation setDelayPerUnit:0.2f];
-    for(int i = 0; i < 3; i++) 
+    for(int i = 0; i < 3; i++)
     {
         [animation addSpriteFrameWithFilename:[NSString stringWithFormat:@"shop%d.png",i+1]];
-    }	
+    }
     
     id action = [CCAnimate actionWithAnimation: animation];
     
@@ -851,7 +876,7 @@ static UGameScene *sharedGameScene;
     
     
     connon=[[UConnon alloc] init:kPlayerID_Null];
-//    connon.anchorPoint=ccp(0.5f,0.2f);
+    //    connon.anchorPoint=ccp(0.5f,0.2f);
     if (isPad) {
         connon.position=ccp(GAME_SCENE_SIZE.width/2,60);
     }else {
@@ -862,7 +887,7 @@ static UGameScene *sharedGameScene;
     if (record!=nil) {
         switch (power) {
             case 1:
-             connon.sp=record->nowSP_1;
+                connon.sp=record->nowSP_1;
                 break;
             case 5:
                 connon.sp=record->nowSP_5;
@@ -884,7 +909,7 @@ static UGameScene *sharedGameScene;
     }
     
     [self addChild:connon z:4];
-
+    
     
 }
 
@@ -912,7 +937,7 @@ static UGameScene *sharedGameScene;
     if (exp!=nil) {
         [exp setTextureRect:CGRectMake(0,0, nowEXP/needEXP*expSize.width, expSize.height)];
     }else {
-//        NSLog(@"exp为空");
+        //        NSLog(@"exp为空");
     }
 }
 -(void)addSP:(int)sp
@@ -920,7 +945,7 @@ static UGameScene *sharedGameScene;
     [connon addLaserSP:sp];
 }
 
-//激光
+#pragma mark --激光
 -(void)laser:(int)angle  point:(CGPoint)point
 {
     laser=[[ULaser alloc] init:angle];
@@ -935,14 +960,15 @@ static UGameScene *sharedGameScene;
     
 }
 
-//type 网的大小
+#pragma mark -- type 网的大小
 -(void)createBlast:(CGPoint)point type:(int)type
 {
-   ParticleEffectSelfMade* particle=[[ParticleEffectSelfMade alloc] init:200 type:type];
+    ParticleEffectSelfMade* particle=[[ParticleEffectSelfMade alloc] init:200 type:type];
     [self addChild:particle z:4];
     particle.texture = [[CCTextureCache sharedTextureCache] addImage: @"bb.png"];
     particle.position = point;
 }
+
 -(void)turnGravity
 {
     [laser setLife:0.5];
@@ -956,9 +982,12 @@ static UGameScene *sharedGameScene;
 {
     [playerLvLabel setString:[NSString stringWithFormat:@"%d",playerLevel]];
 }
+
+#pragma mark --商店
+
 -(void)showShop
 {
-//    NSLog(@"显示商店");
+    //    NSLog(@"显示商店");
     if (gameState==kGameStateForShop) {
         [self closeShop];
     }else {
@@ -969,48 +998,38 @@ static UGameScene *sharedGameScene;
 
 -(void)more
 {
-//    NSLog(@"更多推荐");
+    //    NSLog(@"更多推荐");
 }
+
+#pragma mark -- 等级
+
 -(void)levelAdd
 {
-        connon.level++;
-        if (connon.level>kLevel_7) {
-            connon.level=kLevel_1;
-        }
-        [connon setConnonLevel:connon.level];
-
-//    NSLog(@"等级增加=%d",connon.level);
+    connon.level++;
+    if (connon.level>kLevel_7) {
+        connon.level=kLevel_1;
+    }
+    [connon setConnonLevel:connon.level];
+    
+    //    NSLog(@"等级增加=%d",connon.level);
 }
+
 -(void)levelDec
 {
-        connon.level--;
-        if (connon.level<kLevel_1) {
-            connon.level=kLevel_7;
-        }
-        [connon setConnonLevel:connon.level];
+    connon.level--;
+    if (connon.level<kLevel_1) {
+        connon.level=kLevel_7;
+    }
+    [connon setConnonLevel:connon.level];
+    
+    //    NSLog(@"等级降低=%d",connon.level);
+}
 
-//    NSLog(@"等级降低=%d",connon.level);
-}
--(void)showShopLayer
-{
-//    if ([UGameTools isJailbroken]) {
-//        [self showJailbrokenInfo];
-//        return;
-//    }
-    ///dijk 2016-05-21
-    //[MobClick event:@"open_shop"];
-    
-    shopLayer=[[UShopLayer alloc] init:self];
-    [self addChild:shopLayer z:99];
-    
-    gameState=kGameStateForShop;
-    
-    [self gamePause];
-    [self hideBannerAD];
-    [self pauseAllMenuEnable];
-    itemShop.isEnabled=YES;
-}
+
+#pragma mark ====暂停状态
+
 -(void)gamePause{
+    
     [self pauseSchedulerAndActions];
     self.isTouchEnabled=NO;
     for (UFish *fish in fishArray) {
@@ -1021,6 +1040,9 @@ static UGameScene *sharedGameScene;
     }
     
 }
+
+#pragma  mark ==恢复暂停
+
 -(void)gameResume
 {
     [self resumeSchedulerAndActions];
@@ -1036,31 +1058,62 @@ static UGameScene *sharedGameScene;
 //-(void)pauseShopMenu
 //{
 //    CCMenu *temMenu=(CCMenu *)[[[self getChildByTag:kTagShopLayer] getChildByTag:1] getChildByTag:1];
-//    
+//
 //    if (temMenu!=nil) {
 //        [temMenu setEnabled:NO];
 //    }
-//    
+//
 //}
 //-(void)resumeShopMenu
 //{
 //    CCMenu *temMenu=(CCMenu *)[[[self getChildByTag:kTagShopLayer] getChildByTag:1] getChildByTag:1];
-//    
+//
 //    if (temMenu!=nil) {
 //        [temMenu setEnabled:YES];
 //    }
 //}
-#pragma mark - UShopDelegate
+
+
+#pragma mark ===商店    显示商店
+
+-(void)showShopLayer
+{
+    //    if ([UGameTools isJailbroken]) {
+    //        [self showJailbrokenInfo];
+    //        return;
+    //    }
+    ///dijk 2016-05-21
+    //[MobClick event:@"open_shop"];
+    NSLog(@"显示商店");
+    shopLayer=[[UShopLayer alloc] init:self];
+    [self addChild:shopLayer z:99];
+    
+    gameState=kGameStateForShop;
+    //游戏暂停,鱼群也是要暂停
+    //    [self gamePause];
+    //只是屏幕不可点击
+    self.isTouchEnabled=NO;
+    [self hideBannerAD];
+    [self pauseAllMenuEnable];
+    itemShop.isEnabled=YES;
+}
+
+#pragma mark - UShopDelegate 关闭商店
+
 -(void)closeShop
 {
+    NSLog(@"关闭商店");
     [shopLayer removeFromParentAndCleanup:YES];
     [self resumeAllMenuEneble];
-//  [self resumeButtonEvent];
+    //  [self resumeButtonEvent];
     [self gameResume];
     [self showBannerAD];
-//    NSLog(@"关闭商店");
+    //    NSLog(@"关闭商店");
     gameState=kGameStateForGameing;
 }
+
+#pragma mark ===购买支付
+
 - (void) pay1
 {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"6元",@"type",nil];
@@ -1117,7 +1170,9 @@ static UGameScene *sharedGameScene;
     //[MobClick event:@"choice_pay" attributes:dict];
     [tempObserver loadStore:8];
 }
+
 #pragma mark - 付费接口
+
 -(void)finishTransaction:(SKPaymentTransaction *)transaction wasSuccessful:(BOOL)wasSuccessful
 {
     NSLog(@"finishTransaction#######");
@@ -1129,10 +1184,10 @@ static UGameScene *sharedGameScene;
         NSLog(@"交易成功后的处理,交易的ID=%@",transaction.payment.productIdentifier);
         //        [UGameScene shardScene].isRemoveAD=YES;
         if (!isPad) {
-//            adState=kADStateForNoAD;
+            //            adState=kADStateForNoAD;
             [self showHeadAndLevel];
         }
-
+        
         if ([transaction.payment.productIdentifier isEqualToString:kInAppPurchaseProductIdForPay_6]) {
             NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"6元",@"type",nil];
             ///dijk 2016-05-21
@@ -1189,29 +1244,30 @@ static UGameScene *sharedGameScene;
             [self addMoney:120000];//50000
             [self saveGameData];
         }
-
+        
         // send out a notification that we’ve finished the transaction
-		//[progressInd stopAnimating];
+        //[progressInd stopAnimating];
         //		NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-		//downNum = -1;
-		//NSNumber *num = [NSNumber numberWithInt:downNum];
-		//[prefs setObject:num forKey:kIsIAPurKey];
+        //downNum = -1;
+        //NSNumber *num = [NSNumber numberWithInt:downNum];
+        //[prefs setObject:num forKey:kIsIAPurKey];
         
         //		[prefs synchronize];
-		
+        
         //	[ReaderViewController back];
         //	[SexSafeMainView fun];
-		[[NSNotificationCenter defaultCenter] postNotificationName:kInAppPurchaseManagerTransactionSucceededNotification object:self userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kInAppPurchaseManagerTransactionSucceededNotification object:self userInfo:userInfo];
     }
     else
     {
         // send out a notification for the failed transaction
-		NSLog(@"交易失败后的处理");
+        NSLog(@"交易失败后的处理");
         [[NSNotificationCenter defaultCenter] postNotificationName:kInAppPurchaseManagerTransactionFailedNotification object:self userInfo:userInfo];
         
     }
-
+    
 }
+
 -(void)payOK{
     NSLog(@"payOK#######");
     [shopLayer resumeShopMenu];
@@ -1222,7 +1278,7 @@ static UGameScene *sharedGameScene;
 }
 -(void)restore{
     NSLog(@"restore#######");
-   [shopLayer resumeShopMenu];
+    [shopLayer resumeShopMenu];
 }
 
 
@@ -1234,16 +1290,16 @@ static UGameScene *sharedGameScene;
     
     CCSprite *menuBack=[CCSprite spriteWithFile:@"menu_back.png"];
     
-
+    
     menuBack.position=ccp(GAME_SCENE_SIZE.width/2,GAME_SCENE_SIZE.height/2+GAME_SCENE_SIZE.height/10);
     
-
+    
     
     CCMenuItemImage *itemResume=[CCMenuItemImage itemWithNormalImage:@"menu_resume.png" selectedImage:@"menu_resume_.png" target:self selector:@selector(resumeButtonEvent)];
     CCMenuItemImage *itemHelp=[CCMenuItemImage itemWithNormalImage:@"menu_help.png" selectedImage:@"menu_help_.png" target:self selector:@selector(helpButtonEvent)];
     CCMenuItemImage *itemSetting=[CCMenuItemImage itemWithNormalImage:@"menu_setting.png" selectedImage:@"menu_setting_.png" target:self selector:@selector(settingButtonEvent)];
     CCMenuItemImage *itemMainMenu=[CCMenuItemImage itemWithNormalImage:@"menu_main.png" selectedImage:@"menu_main_.png" target:self selector:@selector(mainMenuButtonEvent)];
-     
+    
     if (isPad) {
         
         itemResume.position=ccpAdd(menuBack.position, ccp(0,140));
@@ -1257,9 +1313,8 @@ static UGameScene *sharedGameScene;
         itemMainMenu.position=ccpAdd(menuBack.position, ccp(0,12));
         itemHelp.position=ccpAdd(menuBack.position, ccp(0,-35));
         itemSetting.position=ccpAdd(menuBack.position, ccp(0,-81));
-       
+        
     }
-    
     
     
     CCMenu *temMenu=[CCMenu menuWithItems:itemResume,itemHelp,itemSetting,itemMainMenu, nil];
@@ -1267,16 +1322,17 @@ static UGameScene *sharedGameScene;
     
     
     
-
-    
     [temMenuLayer addChild:menuBack z:0];
-
+    
     [temMenuLayer addChild:temMenu z:2];
     
-//    temMenuLayer.visible=false;
+    //    temMenuLayer.visible=false;
     [self addChild:temMenuLayer z:99 tag:kTagMenuLayer];
-     temMenuLayer.visible=false;
+    temMenuLayer.visible=false;
 }
+
+#pragma mark ==显示菜单图层
+
 -(void)showMenuLayer
 {
     gameState=kGameStateForMenu;
@@ -1286,6 +1342,9 @@ static UGameScene *sharedGameScene;
     [self gamePause];
     
 }
+
+#pragma mark ==隐藏菜单图层
+
 -(void)hideMenuLayer
 {
     gameState=kGameStateForGameing;
@@ -1296,32 +1355,43 @@ static UGameScene *sharedGameScene;
     [self showBannerAD];
 }
 
+#pragma mark ====继续游戏
+
 -(void)resumeButtonEvent
 {
-//    NSLog(@"继续游戏");
+    //    NSLog(@"继续游戏");
     [self hideMenuLayer];
 }
 
+#pragma mark ====游戏帮助
+
 -(void)helpButtonEvent
 {
-//     NSLog(@"帮助");
+    //     NSLog(@"帮助");
     [self hideBannerAD];
     
     CCScene *scene=[UHelpScene scene];
+    
     [[CCDirector sharedDirector] pushScene:[CCTransitionFadeBL transitionWithDuration:1 scene:scene]];
     
 }
+
+#pragma mark ===游戏设置
+
 -(void)settingButtonEvent
 {
-//     NSLog(@"设置");
+    //     NSLog(@"设置");
     [self hideBannerAD];
     
     CCScene *scene=[USettigScene scene];
     [[CCDirector sharedDirector] pushScene:[CCTransitionFadeBL transitionWithDuration:1 scene:scene]];
 }
+
+#pragma mark = == 进入主菜单
+
 -(void)mainMenuButtonEvent
 {
-//     NSLog(@"主菜单");
+    //     NSLog(@"主菜单");
     [self hideBannerAD];
     
     [self saveGameData];//保存数据
@@ -1338,27 +1408,31 @@ static UGameScene *sharedGameScene;
     [[CCDirector sharedDirector] replaceScene:[CCTransitionFadeBL transitionWithDuration:1 scene:scene]];
 }
 
+
+#pragma  mark ===显示菜单
+
 -(void)showMenu
 {
-
+    
     if (gameState==kGameStateForShop||gameState==kGameStateForLevelUp) {
         return;
     }
-//     NSLog(@"显示菜单");
+    //     NSLog(@"显示菜单");
     CCLayer *temMenuLayer=(CCLayer*)[self getChildByTag:kTagMenuLayer];
-        
+    
     if (temMenuLayer.visible==false) {
-//        NSLog(@"暂停状态");
+        //        NSLog(@"暂停状态");
         [self showMenuLayer];
         [self hideBannerAD];
     }else{
-//        NSLog(@"菜单状态");
+        //        NSLog(@"菜单状态");
         [self hideMenuLayer];
         [self showBannerAD];
     }
-    
-    
 }
+
+#pragma mark ==屏幕截图
+
 - (UIImage *)captureView:(UIView *)view withArea:(CGRect)screenRect {
     
     UIGraphicsBeginImageContext(screenRect.size);
@@ -1371,10 +1445,12 @@ static UGameScene *sharedGameScene;
     
     return newImage;
 }
+
 #pragma mark - 截图及分享
+
 -(void)gamePhoto
 {
-
+    
     
     // 设定截图大小
     CCRenderTexture  *target = [CCRenderTexture renderTextureWithWidth:GAME_SCENE_SIZE.width height:GAME_SCENE_SIZE.height];
@@ -1389,23 +1465,28 @@ static UGameScene *sharedGameScene;
     
     CCLayer *temLayer=[CCLayerColor layerWithColor:ccc4(255, 255, 255, 255)];
     id fadeOut=[CCFadeOut actionWithDuration:0.5];
+#pragma mark == 这句暂时不知什么作用
     id callF=[CCCallFuncN actionWithTarget:self selector:@selector(deletePhotoTem:)];
     [temLayer runAction:[CCSequence actions:fadeOut,callF, nil]];
     [self addChild:temLayer z:99];
     
     [self showSharedPhoto:[target getUIImage]];
-//     NSLog(@"拍照");
-//    [self cleanFish];
-//    [self showLevelUp];
+    //     NSLog(@"拍照");
+    //    [self cleanFish];
+    //    [self showLevelUp];
 }
+
 -(CCSprite *) convertImageToSprite:(UIImage *) image {
     CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image.CGImage forKey:kCCResolutionUnknown];
     CCSprite    *sprite = [CCSprite spriteWithTexture:texture];
     return sprite;
 }
+
+#pragma mark===暂停与恢复所有按钮
+
 - (void)pauseAllMenuEnable
 {
-   
+    
     //暂停及截屏按钮
     itemShop.isEnabled=NO;
     itemConnonAdd.isEnabled=NO;
@@ -1415,7 +1496,7 @@ static UGameScene *sharedGameScene;
 }
 - (void)resumeAllMenuEneble
 {
-    //暂停及截屏按钮
+    //恢复暂停及截屏按钮
     itemShop.isEnabled=YES;
     itemConnonAdd.isEnabled=YES;
     itemConnonDec.isEnabled=YES;
@@ -1426,7 +1507,7 @@ static UGameScene *sharedGameScene;
 {
     [self gamePause];
     
-    //暂定界面上按钮的功能
+    //暂停界面上按钮的功能
     [self pauseAllMenuEnable];
     
     CCLayerColor *sharedLayer=[CCLayerColor layerWithColor:ccc4(0, 0, 0, 80)];
@@ -1467,37 +1548,45 @@ static UGameScene *sharedGameScene;
     [self addChild:sharedLayer z:99 tag:kTagForSharedPhotoLayer];
     
 }
+
+#pragma mark ===分享界面返回
+
 - (void)sharedReturnButtonEvent
 {
+    NSLog(@"关闭分享界面");
     [self gameResume];
     [self resumeAllMenuEneble];
     CCLayerColor *temLayer=(CCLayerColor *)[self getChildByTag:kTagForSharedPhotoLayer];
     [temLayer removeFromParentAndCleanup:YES];
     
-    NSLog(@"关闭分享界面");
 }
+
+#pragma mark ===分享界面,但是分享还没做
+
 - (void)sharedPhotoButtonEvent
 {
-//    [self gameResume];
-//    [self resumeAllMenuEneble];
+    //    [self gameResume];
+    //    [self resumeAllMenuEneble];
     ///dijk 2016-05-21
     /*
-     UMSocialIconActionSheet *iconActionSheet = [[UMSocialControllerService defaultControllerService] getSocialIconActionSheetInController:[CCDirector sharedDirector]];    
-//    UIViewController *rootViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
-//    [iconActionSheet showInView:rootViewController.view];
-    [iconActionSheet showInView:[[CCDirector sharedDirector] view]];
-    [UMSocialData defaultData].shareImage = sharedImage;//[UIImage imageNamed:@"Icon.png"]
-    [UMSocialData defaultData].shareText = @"捕鱼达人，当前最受欢迎的手机游戏之一，大家一起来玩呀。游戏下载地址：https://itunes.apple.com/cn/app/bu-yu-da-ren-mian-fei-ban/id447330270?mt=8";
-    */
+     UMSocialIconActionSheet *iconActionSheet = [[UMSocialControllerService defaultControllerService] getSocialIconActionSheetInController:[CCDirector sharedDirector]];
+     //    UIViewController *rootViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+     //    [iconActionSheet showInView:rootViewController.view];
+     [iconActionSheet showInView:[[CCDirector sharedDirector] view]];
+     [UMSocialData defaultData].shareImage = sharedImage;//[UIImage imageNamed:@"Icon.png"]
+     [UMSocialData defaultData].shareText = @"捕鱼达人，当前最受欢迎的手机游戏之一，大家一起来玩呀。游戏下载地址：https://itunes.apple.com/cn/app/bu-yu-da-ren-mian-fei-ban/id447330270?mt=8";
+     */
     NSLog(@"进入分享");
 }
 
 -(void)deletePhotoTem:(id)sender
 {
+    NSLog(@"删除图片");
     [sender removeFromParentAndCleanup:YES];
-//    [sender release];
+    //    [sender release];
 }
-#pragma mark - 在线领取金币
+
+#pragma mark - 在线领取金币,还没做
 
 - (void)showOnlineGoldReward
 {
@@ -1511,47 +1600,53 @@ static UGameScene *sharedGameScene;
     double h = abs(location.y - gunPoint.y);
     double radian = atan(w/h);
     double degrees = CC_RADIANS_TO_DEGREES(radian);
-//    NSLog(@"radian =%f   degrees=%f",radian,degrees);
+    //    NSLog(@"radian =%f   degrees=%f",radian,degrees);
     [connon fire:degrees];
-//    [connon createButtle:degrees level:connon.level tag:temTag];
+    //    [connon createButtle:degrees level:connon.level tag:temTag];
     
 }
+
+#pragma mark ==设置子弹等级,位置,角度
+
 -(void)createButtle:(int)level point:(CGPoint)pos angle:(float)angle
 {
     
-        UBullet *nextBullet=[[UBullet alloc] init:@"bullet6.png" level:level point:pos];
-//        nextBullet.rotation=angle;
-        [nextBullet setBulletRation:angle];
+    UBullet *nextBullet=[[UBullet alloc] init:@"bullet6.png" level:level point:pos];
+    //        nextBullet.rotation=angle;
+    [nextBullet setBulletRation:angle];
     //   NSLog(@" 接收到的角度 tan angle=%f",tan(angle*M_PI / 180));
-
-        float realY = GAME_SCENE_SIZE.height+nextBullet.contentSize.height;
-        float realX = (realY *tan(angle*M_PI / 180));
-        
-        CGPoint realDest = ccp(realX+pos.x, realY+pos.y);
-        
-        float offRealX = pos.x-realDest.x;
-        float offRealY = pos.y-realDest.y;
-        float length = sqrtf((offRealX*offRealX)+(offRealY*offRealY));
-        float velocity = 480/2; // 480pixels/1sec
-        if (isPad) {
-            velocity = 1024/2;
-        }
-        float realMoveDuration = length/velocity;
-        
-        [bulletArray addObject:nextBullet];
-        
-        
-        [self addChild:nextBullet z:4];
-        
-        [nextBullet runAction:[CCSequence actions:
-                               [CCMoveTo actionWithDuration:realMoveDuration position:realDest],
-                               [CCCallFuncN actionWithTarget:self selector:@selector(bulletMoveFinished:)],
-                               nil]];
-
-        //	realX+=gun.position.x;
-        //	realY+=gun.position.y;
-
+    
+    float realY = GAME_SCENE_SIZE.height+nextBullet.contentSize.height;
+    float realX = (realY *tan(angle*M_PI / 180));
+    
+    CGPoint realDest = ccp(realX+pos.x, realY+pos.y);
+    
+    float offRealX = pos.x-realDest.x;
+    float offRealY = pos.y-realDest.y;
+    float length = sqrtf((offRealX*offRealX)+(offRealY*offRealY));
+    float velocity = 480/2; // 480pixels/1sec
+    if (isPad) {
+        velocity = 1024/2;
+    }
+    float realMoveDuration = length/velocity;
+    
+    [bulletArray addObject:nextBullet];
+    
+    
+    [self addChild:nextBullet z:4];
+    
+    [nextBullet runAction:[CCSequence actions:
+                           [CCMoveTo actionWithDuration:realMoveDuration position:realDest],
+                           [CCCallFuncN actionWithTarget:self selector:@selector(bulletMoveFinished:)],
+                           nil]];
+    
+    //	realX+=gun.position.x;
+    //	realY+=gun.position.y;
+    
 }
+
+#pragma mark ---判断子弹移动的结束
+
 -(void)bulletMoveFinished:(id)sender
 {
     
@@ -1561,7 +1656,8 @@ static UGameScene *sharedGameScene;
     //    NSLog(@"子弹超出屏幕   删除!");
     
 }
-//更新鱼的状态
+#pragma mark ==== 更新鱼的状态
+
 -(void)upDateFish
 {
     NSMutableArray *outFish=[[NSMutableArray alloc] init];
@@ -1580,15 +1676,14 @@ static UGameScene *sharedGameScene;
             }
             fish.isInScreen=false;
         }
-        
     }
-    
     for (UFish *fish in outFish) {
         [self removeFish:fish isClean:TRUE];
     }
     [outFish release];
 }
 
+#pragma mark ==判断是否在矩形内
 
 -(BOOL)isInScene2:(UFish*)fish
 {
@@ -1604,13 +1699,13 @@ static UGameScene *sharedGameScene;
     
     return [UGameTools rectangleCollide:rect_1 angle1:fish.rotation rect2:rect_2 angle2:0];
 }
+
+
 -(BOOL)isInScene:(UFish*)fish
 {
     CGRect sceneRect;
     sceneRect.origin=CGPointZero;
     sceneRect.size=GAME_SCENE_SIZE;
-    
-    
     
     //判断坐标是否在屏幕中
     if (CGRectContainsPoint(sceneRect, fish.position)) {
@@ -1654,7 +1749,7 @@ static UGameScene *sharedGameScene;
             if ([self dotWithRotationRectCollide:CGPointMake(0, GAME_SCENE_SIZE.height) rect:fishRect angle:fish.rotation]) {
                 return true;
             }
-        }        
+        }
     }else {
         if (fish.position.y<=GAME_SCENE_SIZE.height/2) {//在下
             if ([self dotWithRotationRectCollide:CGPointMake(GAME_SCENE_SIZE.width, 0) rect:fishRect angle:fish.rotation]) {
@@ -1664,12 +1759,13 @@ static UGameScene *sharedGameScene;
             if ([self dotWithRotationRectCollide:CGPointMake(GAME_SCENE_SIZE.width, GAME_SCENE_SIZE.height) rect:fishRect angle:fish.rotation]) {
                 return true;
             }
-        }  
+        }
     }
-
+    
     return false;
 }
-//检测点与旋转矩形的碰撞
+
+#pragma mark ==== 检测点与旋转矩形的碰撞
 
 -(BOOL)dotWithRotationRectCollide:(CGPoint)dot rect:(CGRect)rect angle:(float)angle
 {
@@ -1677,23 +1773,26 @@ static UGameScene *sharedGameScene;
     
     CGRect newRect=CGRectMake(rect.origin.x-rect.size.width/2, rect.origin.y-rect.size.height/2, rect.size.width, rect.size.height);
     
-//    NSLog(@"点与矩形的碰撞检测:x=%f   y=%f  temRect:x=%f  y=%f  w=%f  h=%f",newDot.x,newDot.y,newRect.origin.x,newRect.origin.y,newRect.size.width,newRect.size.height);
+    //    NSLog(@"点与矩形的碰撞检测:x=%f   y=%f  temRect:x=%f  y=%f  w=%f  h=%f",newDot.x,newDot.y,newRect.origin.x,newRect.origin.y,newRect.size.width,newRect.size.height);
     
     return CGRectContainsPoint(newRect, newDot);
 }
 
+
+#pragma mark ==将鱼从屏幕中移除
+
 -(void)removeFish:(UFish*)fish isClean:(BOOL)is
 {
-
+    
     [fishArray removeObject:fish];//将鱼从数组中删除
     
     [((UFishSchool*)fish.fishSchool).fishArray removeObject:fish];//将鱼从所属的鱼群中去掉
     if (((UFishSchool*)fish.fishSchool).fishArray.count==0) {//鱼群鱼的数量为0则删除掉鱼群
         [fishSchoolArray removeObject:fish.fishSchool];
         [self removeChild:fish.fishSchool cleanup:YES];
-        [fish.fishSchool release]; 
+        [fish.fishSchool release];
     }
-
+    
     if (is) {
         //从界面上清除并清理掉
         [fish removeFromParentAndCleanup:YES];
@@ -1701,17 +1800,20 @@ static UGameScene *sharedGameScene;
     }else {
         [fish autorelease];
     }
-
+    
 }
+
+#pragma mark ===子弹与鱼的碰撞检测
+
 -(void)checkLaserCollide
 {
     if (connon.connonState==KStateLaser) {
         
         CGPoint laserPos=[connon getFireDot];
-         NSMutableArray *toDelete=[[NSMutableArray alloc] init];
+        NSMutableArray *toDelete=[[NSMutableArray alloc] init];
         //检测激光与鱼的碰撞
         for (UFish *fish in fishArray) {
-           BOOL isCollide= [UGameTools rectangleCollide:CGRectMake(fish.position.x, fish.position.y, fish.contentSize.width, fish.contentSize.height) angle1:fish.rotation rect2:CGRectMake(laserPos.x, laserPos.y, 50, GAME_SCENE_SIZE.height*3) angle2:90-laser.angle];
+            BOOL isCollide= [UGameTools rectangleCollide:CGRectMake(fish.position.x, fish.position.y, fish.contentSize.width, fish.contentSize.height) angle1:fish.rotation rect2:CGRectMake(laserPos.x, laserPos.y, 50, GAME_SCENE_SIZE.height*3) angle2:90-laser.angle];
             if (isCollide) {
                 [toDelete addObject:fish];
             }
@@ -1726,23 +1828,27 @@ static UGameScene *sharedGameScene;
         [self unschedule:_cmd];
     }
 }
+
+
+#pragma mark ==更新子弹
+
 -(void)upDataBullet
 {
     NSMutableArray *projectilesToDelete = [[NSMutableArray alloc] init];
-	for (UBullet *bullet in bulletArray) {
-//		CGRect bulletRect = CGRectMake(bullet.position.x - (bullet.contentSize.width/2), 
-//                                       bullet.position.y - (bullet.contentSize.height/2), 
-//                                       bullet.contentSize.width, 
-//                                       bullet.contentSize.height);
-//		CGSize s=[[CCDirector sharedDirector] winSize];
-//        if (!CGRectIntersectsRect(bulletRect,CGRectMake(0, 0, s.width, s.height))) {
-//            [projectilesToDelete addObject:bullet];
-//            continue;
-//        }
-//        
-		BOOL isIntersects=false;
+    for (UBullet *bullet in bulletArray) {
+        //		CGRect bulletRect = CGRectMake(bullet.position.x - (bullet.contentSize.width/2),
+        //                                       bullet.position.y - (bullet.contentSize.height/2),
+        //                                       bullet.contentSize.width,
+        //                                       bullet.contentSize.height);
+        //		CGSize s=[[CCDirector sharedDirector] winSize];
+        //        if (!CGRectIntersectsRect(bulletRect,CGRectMake(0, 0, s.width, s.height))) {
+        //            [projectilesToDelete addObject:bullet];
+        //            continue;
+        //        }
+        //
+        BOOL isIntersects=false;
         NSMutableArray *toDelete=[[NSMutableArray alloc] init];
-		for (UFish *fish in fishArray) {
+        for (UFish *fish in fishArray) {
             if (fish==nil) {
                 continue;
             }
@@ -1754,12 +1860,12 @@ static UGameScene *sharedGameScene;
             if ([self dotWithRotationRectCollide:bullet.position rect:fishRect angle:fish.rotation]) {//检测子弹与鱼的碰撞
                 isIntersects=true;
                 UNet *net=[[UNet alloc] init:bullet.level plaerID:kPlayerID_Null point:bullet.position];
-//                net.anchorPoint=ccp(0.5f,0.5f);
+                //                net.anchorPoint=ccp(0.5f,0.5f);
                 [self createBlast:bullet.position type:bullet.level];
-//                [self addChild:net];
+                //                [self addChild:net];
                 [toDelete addObjectsFromArray:[self checkNetIntersects:net]];
                 break;
-            } 
+            }
         }
         
         for (UFish *fish in toDelete) {//被网击中的鱼从数组中去掉
@@ -1769,23 +1875,26 @@ static UGameScene *sharedGameScene;
             [self removeFish:fish isClean:NO];
         }
         [toDelete release];
-		
-		if (isIntersects) {//子弹与鱼有发生碰撞则添加到删除数组
-			[projectilesToDelete addObject:bullet];
-		}
-	}
-	
+        
+        if (isIntersects) {//子弹与鱼有发生碰撞则添加到删除数组
+            [projectilesToDelete addObject:bullet];
+        }
+    }
     
-	for (UBullet *bullet in projectilesToDelete) {
-		[bulletArray removeObject:bullet];  
-		[self removeChild:bullet cleanup:YES];
+    
+    for (UBullet *bullet in projectilesToDelete) {
+        [bulletArray removeObject:bullet];
+        [self removeChild:bullet cleanup:YES];
         [bullet release];
-	}    
+    }
     
     
-	[projectilesToDelete release];
+    [projectilesToDelete release];
     
 }
+
+#pragma mark ==判断捕获鱼,概率
+
 -(NSMutableArray*)checkNetIntersects:(UNet*)net
 {
     NSMutableArray *toDelete=[[NSMutableArray alloc] init];
@@ -1820,9 +1929,9 @@ static UGameScene *sharedGameScene;
                 default:
                     break;
             }
-//            n=1.5;
+            //            n=1.5;
         }else{
-//            n=1;
+            //            n=1;
             switch (power) {
                 case 1:
                     n=1.2;
@@ -1855,6 +1964,9 @@ static UGameScene *sharedGameScene;
     }
     return toDelete;
 }
+
+#pragma mark ====创建鱼
+
 -(void)createFish:(int)type frame:(CCSpriteFrame*)spriteFrame fishSpeed:(float)speed fishAngle:(float)angle fishPoint:(CGPoint)point
 {
     UFish *fish = [[UFish alloc] init:type frame:spriteFrame speed:speed angle:angle state:0 fishPoint:point playerID:kPlayerID_Null];
@@ -1868,7 +1980,9 @@ static UGameScene *sharedGameScene;
     }
     return nil;
 }
-//鱼阵型的刷出
+
+#pragma mark == 鱼阵型的刷出
+
 -(void)createFishSchool:(kFishSchoolType)type
 {
     UFish *fish;
@@ -1926,15 +2040,18 @@ static UGameScene *sharedGameScene;
         case kFishSchoolType_12:
             [self fishSchoolCreate_12];
             [self schedule:@selector(fishSchoolCreate_12) interval:1.5f repeat:30 delay:1.0f];
-
+            
             [self addChild:newFishSchool];
             [fishSchoolArray addObject:newFishSchool];
-
+            
             break;
         default:
             break;
     }
 }
+
+#pragma mark ==鱼群
+
 -(void)fishSchoolCreate_12
 {
     id delay;
@@ -1957,7 +2074,7 @@ static UGameScene *sharedGameScene;
         
         fish = [[UFish alloc] init:0 frame:[fishSprireArr objectAtIndex:0] speed:5 angle:0 state:0 fishPoint:CGPointMake(-20, GAME_SCENE_SIZE.height/4+20) playerID:kPlayerID_Null];
         fish2 = [[UFish alloc] init:4 frame:[fishSprireArr objectAtIndex:4] speed:7 angle:180 state:0 fishPoint:CGPointMake(GAME_SCENE_SIZE.width+40, GAME_SCENE_SIZE.height/4*3+10) playerID:kPlayerID_Null];
-
+        
     }else{
         
         delay=[CCDelayTime actionWithDuration:6];
@@ -1969,7 +2086,7 @@ static UGameScene *sharedGameScene;
         fish = [[UFish alloc] init:0 frame:[fishSprireArr objectAtIndex:0] speed:5 angle:0 state:0 fishPoint:CGPointMake(-20, GAME_SCENE_SIZE.height/4+20) playerID:kPlayerID_Null];
         fish2 = [[UFish alloc] init:4 frame:[fishSprireArr objectAtIndex:4] speed:6 angle:180 state:0 fishPoint:CGPointMake(GAME_SCENE_SIZE.width+40, GAME_SCENE_SIZE.height/4*3+10) playerID:kPlayerID_Null];
     }
-
+    
     
     [fish runAction:[CCSequence actions:delay,turn,nil]];
     [fish2 runAction:[CCSequence actions:delay2,turn2,nil]];
@@ -1983,6 +2100,8 @@ static UGameScene *sharedGameScene;
     [newFishSchool addFish:fish];
     [newFishSchool addFish:fish2];
 }
+
+#pragma mark ==创建鱼群,路径
 
 -(void)createFishSchoolWithWay
 {
@@ -2001,7 +2120,7 @@ static UGameScene *sharedGameScene;
         {
             //鱼从左边出来
             point=ccp(-temSpriteFrame.rect.size.width/2,arc4random()%((int)GAME_SCENE_SIZE.height/2)+GAME_SCENE_SIZE.height/4);
-//            point=ccp(50,arc4random()%((int)GAME_SCENE_SIZE.height/2)+GAME_SCENE_SIZE.height/4);
+            //            point=ccp(50,arc4random()%((int)GAME_SCENE_SIZE.height/2)+GAME_SCENE_SIZE.height/4);
             int tem=arc4random()%2;
             if (type==9) {
                 angle=0;
@@ -2030,7 +2149,7 @@ static UGameScene *sharedGameScene;
             break;
     }
     
-
+    
     int n;//鱼的数量
     int pos;//鱼的方位0-8
     int minNum=1,maxNum=1;
@@ -2081,10 +2200,10 @@ static UGameScene *sharedGameScene;
         if(isPad)
         {
             fish = [[UFish alloc] init:type frame:[fishSprireArr objectAtIndex:type] speed:6 angle:angle state:0 fishPoint:CGPointMake(250, 250) playerID:kPlayerID_Null];
-
+            
         }else{
             fish = [[UFish alloc] init:type frame:[fishSprireArr objectAtIndex:type] speed:4 angle:angle state:0 fishPoint:CGPointMake(250, 250) playerID:kPlayerID_Null];
-
+            
         }
         
         if (way==0) {//左
@@ -2096,13 +2215,15 @@ static UGameScene *sharedGameScene;
         [fishBatchNode addChild:fish z:0];
         [fishArray addObject:fish];
         [newFishSchool addFish:fish];
-//      [fish setFishSchool:newFishSchool];
-//      [self sendCreateFish:fish];
+        //      [fish setFishSchool:newFishSchool];
+        //      [self sendCreateFish:fish];
     }
     [self addChild:newFishSchool];
     [fishSchoolArray addObject:newFishSchool];
 }
-//9个方位取num个数字
+
+#pragma mark 获得鱼群方位  9个方位取num个数字
+
 -(NSMutableArray*)getFishSchoolFishPoint:(int)num
 {
     int tem[]={0,1,2,3,4,5,6,7,8};
@@ -2124,7 +2245,8 @@ static UGameScene *sharedGameScene;
     //    }
     return arr;
 }
-//刷鱼控制
+
+#pragma mark ===是否出现新鱼群  //刷鱼控制
 -(void)createFishControl
 {
     int num=kFishNumControl;
@@ -2140,8 +2262,12 @@ static UGameScene *sharedGameScene;
     }
 }
 
+
+#pragma mark ===创建金币
+
 -(void)createGold:(int)type point:(CGPoint)point
 {
+    //获得金币特效
     [self playMoneyEffect];
     
     int num=golds[type];
@@ -2171,7 +2297,7 @@ static UGameScene *sharedGameScene;
             
             CGPoint point2=CGPointMake(point.x+((float)i-(float)num/2)*goldW, point.y);
             UMoney *money=[[UMoney alloc] init:0 point:point2 playerID:kPlayerID_Null] ;
-           
+            
             float time=sqrt((point.x-destination.x)*(point.x-destination.x)+(point.y-destination.y)*(point.y-destination.y))/timeNum;
             id move1=[CCMoveTo actionWithDuration:0.2 position:ccpAdd(point2, moveUp)];
             id delay=[CCDelayTime actionWithDuration:0.5f];
@@ -2200,12 +2326,12 @@ static UGameScene *sharedGameScene;
     }
     
     
-//    UMoney *money=[[UMoney alloc] init:0 point:point playerID:kPlayerID_Null] ;
-//    CGPoint destination=CGPointMake(0, 0);
-//    float time=sqrt((point.x-destination.x)*(point.x-destination.x)+(point.y-destination.y)*(point.y-destination.y))/200;
-//    id move=[CCMoveTo actionWithDuration:time position:destination];
-//    id callFun=[CCCallFuncN actionWithTarget:self selector:@selector(deleteGold:)];
-//    [money runAction:[CCSequence actions:move,callFun, nil]];
+    //    UMoney *money=[[UMoney alloc] init:0 point:point playerID:kPlayerID_Null] ;
+    //    CGPoint destination=CGPointMake(0, 0);
+    //    float time=sqrt((point.x-destination.x)*(point.x-destination.x)+(point.y-destination.y)*(point.y-destination.y))/200;
+    //    id move=[CCMoveTo actionWithDuration:time position:destination];
+    //    id callFun=[CCCallFuncN actionWithTarget:self selector:@selector(deleteGold:)];
+    //    [money runAction:[CCSequence actions:move,callFun, nil]];
     
     
     
@@ -2239,25 +2365,34 @@ static UGameScene *sharedGameScene;
     if ([sender isKindOfClass:[UMoney class]]) {
         [sender removeFromParentAndCleanup:YES];
         [sender release];
-    }    
+    }
 }
 -(void)deleteShowGetGoldLabel:(id)sender
 {
     [sender removeFromParentAndCleanup:YES];
     [sender release];
 }
+
+#pragma mark ==金币特效
+
 -(void)playMoneyEffect
 {
     if (GAME_IS_PLAY_EFFECT) {
         [GAME_AUDIO playEffect:kSoundTypeForMoney];
     }
 }
+
+#pragma mark ===子弹发射特效
+
 -(void)playFireEffect
 {
     if (GAME_IS_PLAY_EFFECT) {
         [GAME_AUDIO playEffect:kSoundTypeForConnonFire];
     }
 }
+
+#pragma mark ===背景音乐
+
 -(void)playBackGroundMusic
 {
     if (GAME_IS_PLAY_SOUND) {
@@ -2265,19 +2400,24 @@ static UGameScene *sharedGameScene;
     }
 }
 
+#pragma  mark ===金币总数量显示
 
 -(void)setGoldShow:(int)num
-{    
+{
     NSString *tem=[NSString stringWithFormat:@"%07d",num];
-//    tem=[NSString stringWithFormat:@"%@%d",[@"000000" substringWithRange:NSMakeRange(1,6-tem.length)],num];
+    //    tem=[NSString stringWithFormat:@"%@%d",[@"000000" substringWithRange:NSMakeRange(1,6-tem.length)],num];
     [goldLabel setString:tem];
 }
+
+#pragma mark ===给金币(自动,每分钟)
 
 -(void)giveGold
 {
     isTiming=true;
     [self schedule:@selector(goldTimeControl) interval:1.0f];
 }
+
+//给金币控制
 -(void)goldTimeControl
 {
     goldTime--;
@@ -2289,57 +2429,63 @@ static UGameScene *sharedGameScene;
         isTiming=false;
     }
 }
+
+//给金币倒计时的显示
 -(void)setGoldTime:(int)num
 {
     NSString *tem=[NSString stringWithFormat:@"%02d",num];
     [goldTimeLabel setString:tem];
 }
 
+#pragma mark ===未知方法
+
 -(int)getPlaceNum:(int)num point:(int)pos
 {
-//    NSLog(@"num=%d  pow(10,pow)=%d  pow(10,num-1)=%d ",num,(int)pow(10, pos),(int)pow(10, num-1));
+    //    NSLog(@"num=%d  pow(10,pow)=%d  pow(10,num-1)=%d ",num,(int)pow(10, pos),(int)pow(10, num-1));
     return num%(int)pow(10, pos)/(int)pow(10, pos-1);
 }
 
 //控制显示的金币滚动
 -(void)turnGoldShow
 {
-    if (goldShow!=gold) 
+    if (goldShow!=gold)
     {
         int n=abs(goldShow-gold);
         NSString *tem=[NSString stringWithFormat:@"%d",n];
         int length=tem.length;
         int value=0;
-        if (goldShow<gold) 
+        if (goldShow<gold)
         {
             value=1;
-        }else if (goldShow>gold) 
+        }else if (goldShow>gold)
         {
             value=-1;
         }
-        for (int i=0; i<length; i++) 
+        for (int i=0; i<length; i++)
         {
             int num=value;
-            for (int j=0; j<i; j++) 
+            for (int j=0; j<i; j++)
             {
                 num*=10;
             }
             goldShow+=num;
         }
-//        NSString *gold=[NSString stringWithFormat:@"%d",goldShow];
-//        [labelMoney setString:gold];
+        //        NSString *gold=[NSString stringWithFormat:@"%d",goldShow];
+        //        [labelMoney setString:gold];
     }
     
 }
 
+#pragma mark====点击屏幕获取发射子弹的位置
+
 -(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
-	CGPoint location = [touch locationInView:[touch view]];
-	location = [[CCDirector sharedDirector] convertToGL:location];
-    
+    CGPoint location = [touch locationInView:[touch view]];
+    location = [[CCDirector sharedDirector] convertToGL:location];
+    NSLog(@"我点击的位置==(%.0f,%.0f)",location.x,location.y);
     //判断金币是否大于炮塔等级的需求  满足则发射子弹
-    
+    //判断点击位置要求
     if (isPad) {
         if (location.y<=80) {
             return;
@@ -2353,14 +2499,17 @@ static UGameScene *sharedGameScene;
     [self connonFire:location];
     
     
-//    NSLog(@"点击的位置：x=%f    y=%f",location.x,location.y);
+    //    NSLog(@"点击的位置：x=%f    y=%f",location.x,location.y);
     
 }
 -(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     
 }
+
+#pragma mark 状态刷新
+
 -(void) update:(ccTime)delta
-{    
+{
     switch (gameState) {
         case kGameStateForGameing:
             
@@ -2370,20 +2519,20 @@ static UGameScene *sharedGameScene;
                     break;
                 case kGameingStateCleanFish:
                     if (fishArray.count==0) {
-//                        NSLog(@"fish be clean!");
+                        //                        NSLog(@"fish be clean!");
                         gameingState=kGameingStateFishSchoolIng;
                         //刷出鱼群
                         [self createFishSchool:kFishSchoolType_12];
                         
                     }else {
-//                        NSLog(@"fish num=%d",fishArray.count);
+                        //                        NSLog(@"fish num=%d",fishArray.count);
                     }
                     break;
                 case kGameingStateFishSchoolIng:
                     if (fishArray.count==0) {
                         gameingState=kGameingStateNormal;
                         [self schedule:@selector(createFishControl) interval:0.5];
-//                        NSLog(@"fish school end!");
+                        //                        NSLog(@"fish school end!");
                     }
                     break;
                 default:
@@ -2443,16 +2592,16 @@ static UGameScene *sharedGameScene;
     }
     
     /*if (gold<100&&!isTiming) {
-        [self giveGold];
-    }*/
+     [self giveGold];
+     }*/
     if (!isTiming) {
         [self giveGold];
     }
     
-//        [self upDateFish];
-        //更新子弹
-        [self upDataBullet];
-        //更新渔网
+    //        [self upDateFish];
+    //更新子弹
+    [self upDataBullet];
+    //更新渔网
     
 }
 //让鱼都加速游出屏幕
@@ -2474,17 +2623,17 @@ static UGameScene *sharedGameScene;
     for (UFish *fish in fishArray) {
         fish.speed=speed;
     }
-//    NSLog(@"fish num=%d  gameState=%d  gameingState=%d",fishArray.count,gameState,gameingState);
+    //    NSLog(@"fish num=%d  gameState=%d  gameingState=%d",fishArray.count,gameState,gameingState);
 }
 -(void)showLevelUp
 {
     gameState=kGameStateForLevelUp;
-//    strForWeibo=@"捞大鱼,捞大鱼…我在最流行的游戏捕鱼达人里已经成为一个出色捕鱼人,荣封我为《江湖小虾》的称号,来挑战我呀! https://itunes.apple.com/cn/app/bu-yu-da-ren-mian-fei-ban/id447330270?mt=8";
+    //    strForWeibo=@"捞大鱼,捞大鱼…我在最流行的游戏捕鱼达人里已经成为一个出色捕鱼人,荣封我为《江湖小虾》的称号,来挑战我呀! https://itunes.apple.com/cn/app/bu-yu-da-ren-mian-fei-ban/id447330270?mt=8";
     
     strForWeibo=[NSString stringWithFormat:@"捞大鱼,捞大鱼…我在最流行的游戏捕鱼达人里已经成为一个出色捕鱼人,荣封我为《%@》的称号,来挑战我呀!%@",@"江湖小虾",@"https://itunes.apple.com/cn/app/bu-yu-da-ren-mian-fei-ban/id447330270?mt=8"];
     
-//    NSLog(@"%@",strForWeibo);
-//    strForWeibo=@"测试啊  测试..";
+    //    NSLog(@"%@",strForWeibo);
+    //    strForWeibo=@"测试啊  测试..";
     [self gamePause];
     [self hideBannerAD];
     CCLayer *levelUpLayer=[CCLayer node];
@@ -2494,7 +2643,7 @@ static UGameScene *sharedGameScene;
     
     
     CCSprite *temName=[CCSprite spriteWithFile:@"levelup_name.png"];
-//    CCSprite *temNum=[CCSprite spriteWithFile:@"levelup_num.png"];
+    //    CCSprite *temNum=[CCSprite spriteWithFile:@"levelup_num.png"];
     CCSprite *temWord=[CCSprite spriteWithFile:@"levelup_word.png"];
     
     CCLabelAtlas *temNum;
@@ -2563,6 +2712,7 @@ static UGameScene *sharedGameScene;
 {
     [self share];
 }
+
 #pragma mark - 版本更新金币奖励
 - (void)getUpDateGoldFor2_2
 {
@@ -2576,7 +2726,7 @@ static UGameScene *sharedGameScene;
         goldH=75;
         timeNum=450;
         destination= CGPointMake(60, 60);
-         moveUp= CGPointMake(0, arc4random()%30+30);
+        moveUp= CGPointMake(0, arc4random()%30+30);
     }else{
         goldW=33;
         goldH=37;
@@ -2632,7 +2782,7 @@ static UGameScene *sharedGameScene;
 -(void)updateButtonEvent
 {
     CGPoint destination,moveUp;
-     int goldW,goldH,timeNum;
+    int goldW,goldH,timeNum;
     
     if (isPad) {
         goldW=65;
@@ -2665,7 +2815,9 @@ static UGameScene *sharedGameScene;
     gold+=1000;
     [self saveGameData];
 }
-#pragma mark - 记录操作
+
+
+#pragma mark - 记录操作(是什么记录,是coreData?,是游戏记录吗,是获取什么为该手机的唯一标识,)
 //将2.1版本的数据记录转移到2.2版本的记录结构中并删除2.1的记录
 //另增加版本更新送与的1000金币.
 - (void)recordRransfer
@@ -2693,7 +2845,7 @@ static UGameScene *sharedGameScene;
             NSData *data=[NSData dataWithBytes:&record length:sizeof(record)];
             [USave saveGameData:data toFile:kRecordTypeForGameData2_2];
             //删除2.1记录
-//          [USave deleteRecord:kRecordTypeForGameData];
+            //          [USave deleteRecord:kRecordTypeForGameData];
             //调用新版本更新增加金币函数
         }
     }
@@ -2701,8 +2853,11 @@ static UGameScene *sharedGameScene;
 
 - (BOOL)isHaveDataFor2_1
 {
-   return  [USave isHaveRecord:kRecordTypeForGameData];
+    return  [USave isHaveRecord:kRecordTypeForGameData];
 }
+
+#pragma mark ==保存游戏数据
+
 -(void)saveGameData
 {
     
@@ -2732,7 +2887,7 @@ static UGameScene *sharedGameScene;
             break;
         default:
             break;
-    }    
+    }
     record.nowEXP=nowEXP;
     record.needEXP=needEXP;
     record.isRemoveAD=isRemoveAD;
@@ -2744,15 +2899,21 @@ static UGameScene *sharedGameScene;
 {
     return (RecordForGameData_2_2*)[[USave readGameData:kRecordTypeForGameData2_2] bytes];
 }
+
+#pragma mark ==游戏数据记录
+
 -(void)readGameData
 {
     RecordForGameData *record=(RecordForGameData*)[[USave readGameData:kRecordTypeForGameData2_2] bytes];
     if (record==nil) {
-//        NSLog(@"游戏没有数据记录!");
+        //        NSLog(@"游戏没有数据记录!");
         return;
     }
     
 }
+
+#pragma mark ==增加金币
+
 -(void)addMoney:(int)num
 {
     gold+=num;
@@ -2764,9 +2925,9 @@ static UGameScene *sharedGameScene;
 {
     ///dijk 2016-05-21
     /*if (banner!=nil) {
-        [banner release];
-        banner=nil;
-    }
+     [banner release];
+     banner=nil;
+     }
      */
 }
 
@@ -2782,10 +2943,10 @@ static UGameScene *sharedGameScene;
 -(void)share
 {
     [self shareForLevel];
-//    //检查网络
-//    if ([CheckNetwork isExistenceNetwork]) {
-//        [self shareMethod];
-//    }
+    //    //检查网络
+    //    if ([CheckNetwork isExistenceNetwork]) {
+    //        [self shareMethod];
+    //    }
 }
 -(void)shareForLevel
 {
@@ -2799,12 +2960,12 @@ static UGameScene *sharedGameScene;
     sharedImage=[[target getUIImage] retain];
     ///dijk 2016-05-21
     /*
-    UMSocialIconActionSheet *iconActionSheet = [[UMSocialControllerService defaultControllerService] getSocialIconActionSheetInController:[CCDirector sharedDirector]];
-    //    UIViewController *rootViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
-    //    [iconActionSheet showInView:rootViewController.view];
-    [iconActionSheet showInView:[[CCDirector sharedDirector] view]];
-    [UMSocialData defaultData].shareImage = sharedImage;//[UIImage imageNamed:@"Icon.png"]
-    [UMSocialData defaultData].shareText =[NSString stringWithFormat:@"捞大鱼,捞大鱼…我在最流行的游戏捕鱼达人里已经成为一个出色捕鱼人,荣封我为《%@》的称号,来挑战我呀!%@",gameLevelName[playerLevel],@"https://itunes.apple.com/cn/app/bu-yu-da-ren-mian-fei-ban/id447330270?mt=8"];
+     UMSocialIconActionSheet *iconActionSheet = [[UMSocialControllerService defaultControllerService] getSocialIconActionSheetInController:[CCDirector sharedDirector]];
+     //    UIViewController *rootViewController = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+     //    [iconActionSheet showInView:rootViewController.view];
+     [iconActionSheet showInView:[[CCDirector sharedDirector] view]];
+     [UMSocialData defaultData].shareImage = sharedImage;//[UIImage imageNamed:@"Icon.png"]
+     [UMSocialData defaultData].shareText =[NSString stringWithFormat:@"捞大鱼,捞大鱼…我在最流行的游戏捕鱼达人里已经成为一个出色捕鱼人,荣封我为《%@》的称号,来挑战我呀!%@",gameLevelName[playerLevel],@"https://itunes.apple.com/cn/app/bu-yu-da-ren-mian-fei-ban/id447330270?mt=8"];
      */
 }
 -(void)showUpdateInfo
@@ -2816,13 +2977,13 @@ static UGameScene *sharedGameScene;
     [dialog setTitle:@"游戏更新奖励"];
     [dialog setMessage:@"恭喜你获得了1000金币的更新奖励!"];
     [dialog addButtonWithTitle:@"确定"];
-//    [dialog addButtonWithTitle:@"取消"];
+    //    [dialog addButtonWithTitle:@"取消"];
     [dialog show];
     [dialog release];
 }
 -(void)showNoMoneyInfo
 {
-
+    
     UIAlertView* dialog = [[UIAlertView alloc] init];
     dialog.tag=kTagForNoMoneyInfo;
     [dialog setDelegate:self];
@@ -2842,7 +3003,7 @@ static UGameScene *sharedGameScene;
     [dialog setTitle:@"系统提示!"];
     [dialog setMessage:@"越狱设备不支持!"];
     [dialog addButtonWithTitle:@"确定"];
-//    [dialog addButtonWithTitle:@"取消"];
+    //    [dialog addButtonWithTitle:@"取消"];
     [dialog show];
     [dialog release];
 }
@@ -2850,7 +3011,7 @@ static UGameScene *sharedGameScene;
 {
     if (alert.tag==kTagForNoMoneyInfo) {
         if(buttonIndex==0) {  //yes
-           [self showShopLayer];
+            [self showShopLayer];
         }
         else{  //No
             
@@ -3093,10 +3254,18 @@ static UGameScene *sharedGameScene;
     }
 }
 
-- (void)onEnterTransitionDidFinish{
+//- (void) onEnterTransitionDidFinish{
+//    
+//    NSLog(@"载入中...");
+//    if (gameState == kGameStateForMenu) {
+//        [self gamePause];
+//    }
+//}
+
+- (void) onEnter{
     
+    [super onEnter];
     if (gameState == kGameStateForMenu) {
-        
         [self gamePause];
     }
 }

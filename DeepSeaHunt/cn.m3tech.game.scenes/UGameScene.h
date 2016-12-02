@@ -28,7 +28,7 @@
 #import "BaiduMobAdInterstitial.h"
 #import "BaiduMobAdDelegateProtocol.h"
 #import "BaiduMobAdView.h"
-#define kTimeShowAD 7
+#define kTimeShowAD 20
 #define kTimeWarttingAD 20
 
 #define kAppKey             @"3941824814"

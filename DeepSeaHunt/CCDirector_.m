@@ -23,7 +23,7 @@
 		nextScene_ = scene;
         
         //解决了delegate问题
-        [[CCTouchDispatcher sharedDispatcher] removeAllDelegates];
+        [[CCTouchDispatcher sharedDispatcher] removeAllDelegates];         
 	}
 }
 

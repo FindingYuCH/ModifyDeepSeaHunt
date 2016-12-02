@@ -39,9 +39,9 @@
 }
 @property (assign) id <UInAppDelegate> inAppDelegate;
 
--(id)init:(UIView *)parent delegate:(id<UInAppDelegate>)inApp;
+- (id)init:(UIView *)parent delegate:(id<UInAppDelegate>)inApp;
 - (void)requestProUpgradeProductData;
--(void)hideWaittiing;
+- (void)hideWaittiing;
 - (void)loadStore:(int)productID;
 - (BOOL)canMakePurchases;
 - (void)purchaseProUpgrade;
