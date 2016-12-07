@@ -229,7 +229,7 @@ static int frames[] = { 5, 7, 5, 7, 9, 9, 8, 8, 8, 9};
         [self setPositionWithAngle];
         
     }else {
-        
+#pragma mark 消息
         MessageFishTurnAngle message;
         message.message.messageType=kMessageTypeFishTurnAngle;
         message.angle=angle;

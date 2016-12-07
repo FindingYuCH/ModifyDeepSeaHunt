@@ -16,24 +16,47 @@
 {
 	CCScene *scene = [CCScene node];
     UWelcomeScene *layer = [UWelcomeScene node];
+    
+    
     [scene addChild:layer];
+    
 	return scene;
 }
+
+#pragma mark ==界面初始化
+
 -(id)init
 {
     if (self=[super init]) {
         
         
+        
         GAME_SCENE_SIZE = [[CCDirector sharedDirector] winSize];
         
+        
+        NSLog(@"++++++++++++++++width==%f,height==%f",GAME_SCENE_SIZE.width,GAME_SCENE_SIZE.height);
+        
+//        CCSprite * btn = [CCSprite spriteWithFile:@"button_about.png"];
+//        btn.anchorPoint = ccp(0, 0);
+//        btn.position = ccp(0, 10);
+//        
+//        [self addChild:btn];
         //背景
         CCSprite *backGound;
+        
         if (GAME_SCENE_SIZE.width==568&&GAME_SCENE_SIZE.height==320) {
+            NSLog(@"568,320");
             backGound=[CCSprite spriteWithFile:@"welcome_background-iphone5.png"];
+            
+        }else if(GAME_SCENE_SIZE.width==480&&GAME_SCENE_SIZE.height==320){
+            NSLog(@"其他");
+            backGound=[CCSprite spriteWithFile:@"welcome_background.png"];
         }else{
             backGound=[CCSprite spriteWithFile:@"welcome_background.png"];
         }
-        backGound.anchorPoint=CGPointZero;
+//        backGound.anchorPoint=CGPointZero;
+//        backGound.anchorPoint=CGPointMake(0, 0);
+        backGound.position = ccp(GAME_SCENE_SIZE.width/2, GAME_SCENE_SIZE.height/2);
         [self addChild:backGound z:-1];
         
         //标题
@@ -218,6 +241,9 @@
         [GAME_AUDIO playBackgroundMusic:kSoundTypeForUIMusic];
     }
 }
+
+//气泡更新
+
 - (void)update
 {
     

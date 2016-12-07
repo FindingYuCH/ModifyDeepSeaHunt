@@ -18,6 +18,7 @@
 //#import "UMSocialSnsService.h"
 
 #import "UMMobClick/MobClick.h"
+#import "TestSecne.h"
 
 @implementation AppController
 
@@ -59,11 +60,12 @@
     
     
 	// Create the main window
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	window_ = [[UIWindow alloc]                                                                                                                                                                    initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    NSLog(@"宽%f,高%f",[window_  bounds].size.width,[window_ bounds].size.height);
     
 	// Create an CCGLView with a RGB565 color buffer, and a depth buffer of 0-bits
-	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
+	CCGLView *glView = [CCGLView viewWithFrame:CGRectMake(0, 0, [window_ bounds].size.width, [window_ bounds].size.height)
 								   pixelFormat:kEAGLColorFormatRGB565	//kEAGLColorFormatRGBA8
 								   depthFormat:0	//GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
@@ -71,9 +73,13 @@
 								 multiSampling:NO
 							   numberOfSamples:0];
     
+//    [glView setFrame:CGRectMake(0, 0, 480, 320)];
+    
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
     
-	director_.wantsFullScreenLayout = YES;
+	director_.wantsFullScreenLayout = YES;//ios7之前
+//    director_.edgesForExtendedLayout= UIRectEdgeAll;//ios7之后
+    
     
 	// Display FSP and SPF
 //	[director_ setDisplayStats:YES];
@@ -102,6 +108,8 @@
     if (!isPad) {
         if( ! [director_ enableRetinaDisplay:YES] )
             CCLOG(@"Retina Display Not supported");
+    }else{
+        
     }
     
 	// Create a Navigation Controller with the Director
@@ -128,6 +136,9 @@
     
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+    
+    
+    
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
 	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
@@ -145,7 +156,10 @@
     //[UMSocialData setAppKey:kUMAPPKEY];
     [self applicationLocalNotification:application];
 	// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-	[director_ pushScene: [UWelcomeScene scene]]; 
+    //欢迎界面
+	[director_ pushScene: [UWelcomeScene scene]];
+//    CCScene * test = [TestSecne new];
+//    [director_ pushScene: test];
     
 	return YES;
 }
@@ -244,6 +258,8 @@
 {
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
+
+
 
 - (void) dealloc
 {
