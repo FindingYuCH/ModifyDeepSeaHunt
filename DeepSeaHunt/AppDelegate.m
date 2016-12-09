@@ -18,7 +18,7 @@
 //#import "UMSocialSnsService.h"
 
 #import "UMMobClick/MobClick.h"
-#import "TestSecne.h"
+
 
 @implementation AppController
 

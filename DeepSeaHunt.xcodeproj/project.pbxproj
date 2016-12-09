@@ -843,7 +843,6 @@
 		A02A934A1DED754C00F775E2 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A02A93491DED754C00F775E2 /* libxml2.tbd */; };
 		A02A934C1DED755A00F775E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A02A934B1DED755A00F775E2 /* libz.tbd */; };
 		A02A934E1DED847A00F775E2 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02A934D1DED847A00F775E2 /* UMMobClick.framework */; };
-		A0F96BE61DF6D36C00D54253 /* TestSecne.m in Sources */ = {isa = PBXBuildFile; fileRef = A0F96BE51DF6D36C00D54253 /* TestSecne.m */; };
 		A0FB054B1DF811BD0092F4DB /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = A0FB053D1DF811BD0092F4DB /* 120.png */; };
 		A0FB054C1DF811BD0092F4DB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0FB053E1DF811BD0092F4DB /* Default-568h@2x.png */; };
 		A0FB054D1DF811BD0092F4DB /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0FB053F1DF811BD0092F4DB /* Default-Landscape@2x~ipad.png */; };
@@ -1881,8 +1880,6 @@
 		A02A93491DED754C00F775E2 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		A02A934B1DED755A00F775E2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A02A934D1DED847A00F775E2 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
-		A0F96BE41DF6D36C00D54253 /* TestSecne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSecne.h; sourceTree = "<group>"; };
-		A0F96BE51DF6D36C00D54253 /* TestSecne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSecne.m; sourceTree = "<group>"; };
 		A0FB053D1DF811BD0092F4DB /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
 		A0FB053E1DF811BD0092F4DB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A0FB053F1DF811BD0092F4DB /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
@@ -3062,8 +3059,6 @@
 				9D1C115017379DA700B7E240 /* UGameSceneChoice.m */,
 				9D200322174C7A140093B60F /* UShopLayer.h */,
 				9D200323174C7A140093B60F /* UShopLayer.m */,
-				A0F96BE41DF6D36C00D54253 /* TestSecne.h */,
-				A0F96BE51DF6D36C00D54253 /* TestSecne.m */,
 			);
 			name = cn.m3tech.game.scenes;
 			sourceTree = "<group>";
@@ -4219,7 +4214,6 @@
 				92A83D4A15528C20003D0477 /* TGAlib.m in Sources */,
 				92A83D4D15528C21003D0477 /* TransformUtils.m in Sources */,
 				92A83D5215528C21003D0477 /* ZipUtils.m in Sources */,
-				A0F96BE61DF6D36C00D54253 /* TestSecne.m in Sources */,
 				92A83D5715528C21003D0477 /* CDAudioManager.m in Sources */,
 				92A83D5B15528C21003D0477 /* CDOpenALSupport.m in Sources */,
 				92A83D5E15528C21003D0477 /* CocosDenshion.m in Sources */,
@@ -4329,6 +4323,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Linhai Chen (62K6Y85M94)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4385,6 +4380,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "23db1a98-0d8a-4595-8891-5e158d43d69c";
+				STRIP_PNG_TEXT = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = "armv6 armv7";
@@ -4400,6 +4396,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Linhai Chen (62K6Y85M94)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4454,6 +4451,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "23db1a98-0d8a-4595-8891-5e158d43d69c";
+				STRIP_PNG_TEXT = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv6 armv7";
