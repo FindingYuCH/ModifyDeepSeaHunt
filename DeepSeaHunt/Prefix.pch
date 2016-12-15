@@ -12,3 +12,9 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #endif
+
+#define MoGo_ID_IPhone @"bb0bf739cd8f4bbabb74bbaa9d2768bf"
+#define MoGo_ID_IPhone_ManualFresh @"b132af18e08b441185cba89b34c25061"
+
+#define MoGo_ID_IPad @"4703de8b8e1a4951be4798fd6162577c"
+#define MoGo_ID_IPad_ManualFresh @"a6a32c3cd3654d7f9b9c6f65182f1464"

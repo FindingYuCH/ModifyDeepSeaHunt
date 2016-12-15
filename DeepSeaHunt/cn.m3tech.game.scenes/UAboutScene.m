@@ -14,12 +14,18 @@
     CCScene *scene = [CCScene node];
     UAboutScene *layer = [UAboutScene node];
     [scene addChild:layer];
+    
+    
 	return scene;
 }
 
 -(id)init
 {
     if (self=[super init]) {
+        
+       
+        
+        
         CCSprite *temBackGround;
         if (GAME_SCENE_SIZE.width==568&&GAME_SCENE_SIZE.height==320) {
             temBackGround=[CCSprite spriteWithFile:@"universal_background-iphone5.png"];
@@ -71,4 +77,8 @@
 {
     [[CCDirector sharedDirector] popSceneWithTransition:[CCTransitionFadeBL class] duration:1];
 }
+
+
+
+
 @end

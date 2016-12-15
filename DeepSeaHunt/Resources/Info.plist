@@ -49,6 +49,8 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>baidumobads</string>
+		<string>urlscheme</string>
+		<string>urlscheme2</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

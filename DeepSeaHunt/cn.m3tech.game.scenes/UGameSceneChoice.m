@@ -38,9 +38,119 @@
         self.isTouchEnabled=YES;
 //      [[CCDirector sharedDirector].view addGestureRecognizer:panGestureRecognizer];
 //      [[CCDirector sharedDirector].view addGestureRecognizer:swipeGestureRescognizer];
+        
+        
+        
+        //插屏
+//        [AdMoGoInterstitialManager setAppKey: @"ffd6064c2cc74da6909a92ab353f675f"];
+//        [[AdMoGoInterstitialManager shareInstance] initDefaultInterstitial];
+//        [AdMoGoInterstitialManager setDefaultDelegate: self];
+//        AdMoGoInterstitial * insterstitial = [[AdMoGoInterstitialManager shareInstance] adMogoInterstitialByAppKey:@"ffd6064c2cc74da6909a92ab353f675f"];
+//        insterstitial.adWebBrowswerDelegate = self;
+//        [insterstitial interstitialShow:YES];
+        
+//        mogo_View = [[AdMoGoView alloc] initWithAppKey:MoGo_ID_IPhone adType:AdViewTypeNormalBanner adMoGoViewDelegate:self];
+//        mogo_View.adWebBrowswerDelegate = self;
+//        [mogo_View setViewPointType:AdMoGoViewPointTypeMiddle_middle];
+//        
+//        AppController * avc = (AppController *) [UIApplication sharedApplication].delegate;
+//        [avc.navController.visibleViewController.view addSubview: mogo_View];
+//        [[CCDirector sharedDirector].view addSubview: mogo_View];
+        
+        
     }
     return self;
 }
+
+- (UIViewController *)viewControllerForPresentingInterstitialModalView{
+    
+    NSLog(@"返回视图");
+    AppController *vc = (AppController *)[UIApplication sharedApplication].delegate;
+    
+    //    return [CCDirector sharedDirector];
+    return vc.navController;
+}
+
+- (UIViewController *)viewControllerForPresentingModalView
+{
+    NSLog(@"返回视图");
+    AppController *vc = (AppController *)[UIApplication sharedApplication].delegate;
+    
+//    return [CCDirector sharedDirector];
+    return vc.navController;
+}
+
+
+- (void)adMoGoDidStartAd:(AdMoGoView *)adMoGoView
+{
+    NSLog(@"广告开始请求回调");
+}
+
+
+- (void)adMoGoDidReceiveAd:(AdMoGoView *)adMoGoView
+{
+    NSLog(@"广告接收成功回调");
+}
+
+
+- (void)adMoGoDidFailToReceiveAd:(AdMoGoView *)adMoGoView didFailWithError:(NSError *)error
+{
+    NSLog(@"广告接收失败回调");
+    
+    
+}
+
+
+- (void)adMoGoClickAd:(AdMoGoView *)adMoGoView
+{
+    NSLog(@"点击广告回调");
+}
+
+
+- (void)adMoGoDeleteAd:(AdMoGoView *)adMoGoView
+{
+    NSLog(@"广告关闭回调");
+}
+
+#pragma mark - AdMoGoWebBrowserControllerUserDelegate delegate
+
+
+- (void)webBrowserWillAppear
+{
+    NSLog(@"浏览器将要展示");
+}
+
+
+- (void)webBrowserDidAppear
+{
+    NSLog(@"浏览器已经展示");
+}
+
+
+- (void)webBrowserWillClosed
+{
+    NSLog(@"浏览器将要关闭");
+}
+
+
+- (void)webBrowserDidClosed
+{
+    NSLog(@"浏览器已经关闭");
+}
+
+- (BOOL)shouldAlertQAView:(UIAlertView *)alertView
+{
+    return YES;
+}
+
+- (void)webBrowserShare:(NSString *)url { }
+
+
+
+
+
+
+
 - (CCNode*)getChoiceItem:(NSInteger)itemID
 {
     CCNode *temNode=[self getChildByTag:itemID];

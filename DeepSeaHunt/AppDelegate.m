@@ -19,6 +19,8 @@
 
 #import "UMMobClick/MobClick.h"
 
+#import "AdMoGoLogCenter.h"
+
 
 @implementation AppController
 
@@ -26,6 +28,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [[AdMoGoLogCenter shareInstance] setLogLeveFlag:AdMoGoLogTemp];
     
     //友盟集成测试的唯一id获取
     Class cls = NSClassFromString(@"UMANUtil");

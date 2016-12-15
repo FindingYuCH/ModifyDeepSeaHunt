@@ -10,6 +10,7 @@
 
 
 
+
 #define kFishNumControl 70
 #define kFishNumControlForIpad 70
 #define kTagMenuLayer 11
@@ -76,6 +77,11 @@ static UGameScene *sharedGameScene;
 -(id)init:(int)p
 {
     if (self=[super init]) {
+        
+        
+        
+        
+        
         
         adState=kADStateForHide;
         //设置场景倍率
@@ -179,9 +185,15 @@ static UGameScene *sharedGameScene;
     self.isInVideo = @"1";
     self.customWidth = @"300";
     self.customHeight = @"300";
+    
     [self loadInterAd];
     
+    
+//    mogoView2 = nil;
     sharedAdView = nil;
+    mogoView = nil;
+    _view_mogo_chaping = nil;
+    
     
     return self;
 }
@@ -631,6 +643,7 @@ static UGameScene *sharedGameScene;
     [self showHeadAndLevel];
 }
 /// dijk 2016-05-21 去掉mogo广告
+#pragma mark ==横幅广告
 -(void)showBannerAD
 {
     /*
@@ -646,25 +659,39 @@ static UGameScene *sharedGameScene;
      }
      }
      */
-    
+
     if(sharedAdView == nil){
         ///dijk 2016-05-21 百度广告 启动广告，Banner广告
         //使用嵌入广告的方法实例。
-        sharedAdView = [[[BaiduMobAdView alloc] init]autorelease];
+//        sharedAdView = [[[BaiduMobAdView alloc] init]autorelease];
         //把在mssp.baidu.com上创建后获得的代码位id写到这里
-        sharedAdView.AdUnitTag = @"2015347";
-        sharedAdView.AdType = BaiduMobAdViewTypeBanner;
-        sharedAdView.frame = kAdViewPortraitRect;
-        sharedAdView.delegate = self;
-        [[[CCDirector sharedDirector] view] addSubview:sharedAdView];
-        [sharedAdView start];
+//        sharedAdView.AdUnitTag = @"2015347";
+//        sharedAdView.AdType = BaiduMobAdViewTypeBanner;
+//        sharedAdView.frame = kAdViewPortraitRect;
+//        sharedAdView.delegate = self;
+//        [[[CCDirector sharedDirector] view] addSubview:sharedAdView];
+//        [sharedAdView start];
         //[sharedAdView setHidden:true];
+        
+        
+        
+        
+    }
+    if (mogoView == nil) {
+        mogoView = [[AdMoGoView alloc] initWithAppKey:MoGo_ID_IPhone adType:AdViewTypeNormalBanner adMoGoViewDelegate:self];
+        
+        mogoView.adWebBrowswerDelegate = self;
+        [mogoView setViewPointType:AdMoGoViewPointTypeTop_left];
+        [[[CCDirector sharedDirector] view] addSubview:mogoView];
     }
     
     ///dijk 2016-05-21 显示Banner广告
-    if( sharedAdView != nil){
-        //[self hideHeadAndLevel];
-        [sharedAdView setHidden:false];
+//    if( sharedAdView != nil){
+//        //[self hideHeadAndLevel];
+//        [sharedAdView setHidden:false];
+//    }
+    if (mogoView != nil) {
+        [mogoView setHidden: false];
     }
     
 }
@@ -683,9 +710,12 @@ static UGameScene *sharedGameScene;
      }
      */
     ///dijk 2016-05-21 显示Banner广告
-    if(sharedAdView != nil){
-        [sharedAdView setHidden:true];
-        //[self showHeadAndLevel];
+//    if(sharedAdView != nil){
+//        [sharedAdView setHidden:true];
+//        //[self showHeadAndLevel];
+//    }
+    if (mogoView != nil) {
+        [mogoView setHidden: true];
     }
     
 }
@@ -3031,6 +3061,9 @@ static UGameScene *sharedGameScene;
 }
 
 - (IBAction)loadInterAd {
+    
+    //百度联盟的插屏广告
+    
     self.adInterstitial = [[BaiduMobAdInterstitial alloc] init];
     self.adInterstitial.delegate = self;
     //把在mssp.baidu.com上创建后获得的代码位id写到这里
@@ -3049,15 +3082,145 @@ static UGameScene *sharedGameScene;
     //NSInteger screenH = [[CCDirector sharedDirector] view].frame.size.height;
     
     [self.adInterstitial loadUsingSize:CGRectMake(0,0, [w floatValue], [h floatValue])];
+   
+
+
+    
+    //使用芒果的加载不出来插屏广告
+//        if (mogoView2 == nil) {
+//    
+//            NSLog(@"========返回的是插屏广告");
+////    bb0bf739cd8f4bbabb74bbaa9d2768bf
+//            mogoView2 = [[AdMoGoView alloc] initWithAppKey:@"bb0bf739cd8f4bbabb74bbaa9d2768bf"
+//                                                    adType:AdViewTypeiPhoneRectangle
+//                                        adMoGoViewDelegate:self];
+//            mogoView2.adWebBrowswerDelegate = self;
+//            [mogoView2 setViewPointType:AdMoGoViewPointTypeMiddle_middle];
+//            [[[CCDirector sharedDirector] view] addSubview: mogoView2];
+//    
+//}
+    //自主广告
+    //            [AdMoGoInterstitialManager setAppKey: @"ffd6064c2cc74da6909a92ab353f675f"];
+    //                    [[AdMoGoInterstitialManager shareInstance] initDefaultInterstitial];
+    //                    [AdMoGoInterstitialManager setDefaultDelegate: self];
+    //                    AdMoGoInterstitial * insterstitial = [[AdMoGoInterstitialManager shareInstance] adMogoInterstitialByAppKey:@"ffd6064c2cc74da6909a92ab353f675f"];
+    //                    insterstitial.adWebBrowswerDelegate = self;
+    //                    [insterstitial interstitialShow:YES];
+
+
 }
+
+#pragma mark ==插屏广告代理
+
+#pragma mark - AdMoGoDelegate delegate
+
+
+//芒果自主广告 
+- (UIViewController *) viewControllerForPresentingInterstitialModalView{
+    
+    return [CCDirector sharedDirector];
+}
+
+
+- (void)adsMoGoInterstitialAdDidDismiss{
+    
+    [self showAD];
+}
+
+- (void)adsMogoInterstitialAdClosed:(BOOL)isAutoClose{
+    
+    NSLog(@"广告关闭了");
+}
+
+
+//芒果插屏广告
+
+- (UIViewController *)viewControllerForPresentingModalView
+{
+    NSLog(@"返回视图");
+    return [CCDirector sharedDirector];
+}
+
+
+- (void)adMoGoDidStartAd:(AdMoGoView *)adMoGoView
+{
+    NSLog(@"广告开始请求回调");
+}
+
+
+- (void)adMoGoDidReceiveAd:(AdMoGoView *)adMoGoView
+{
+    NSLog(@"广告接收成功回调");
+}
+
+
+- (void)adMoGoDidFailToReceiveAd:(AdMoGoView *)adMoGoView didFailWithError:(NSError *)error
+{
+    NSLog(@"广告接收失败回调");
+    if (mogoView == nil) {
+        [self showAD];
+    }
+    
+}
+
+
+- (void)adMoGoClickAd:(AdMoGoView *)adMoGoView
+{
+    NSLog(@"点击广告回调");
+}
+
+
+- (void)adMoGoDeleteAd:(AdMoGoView *)adMoGoView
+{
+    NSLog(@"广告关闭回调");
+}
+
+#pragma mark - AdMoGoWebBrowserControllerUserDelegate delegate
+
+
+- (void)webBrowserWillAppear
+{
+    NSLog(@"浏览器将要展示");
+}
+
+
+- (void)webBrowserDidAppear
+{
+    NSLog(@"浏览器已经展示");
+}
+
+
+- (void)webBrowserWillClosed
+{
+    NSLog(@"浏览器将要关闭");
+}
+
+
+- (void)webBrowserDidClosed
+{
+    NSLog(@"浏览器已经关闭");
+}
+
+- (BOOL)shouldAlertQAView:(UIAlertView *)alertView
+{
+    return YES;
+}
+
+- (void)webBrowserShare:(NSString *)url { }
+
+
+
+
 
 - (NSString *)publisherId {
-    return @"ccb60059"; //your_own_app_id
+    
+    return @"ccb60059";
+//    your_own_app_id
 }
 
-/**
- *  广告预加载成功
- */
+#pragma mark===百度联盟的代理
+
+//   广告预加载成功
 - (void)interstitialSuccessToLoadAd:(BaiduMobAdInterstitial *)interstitial
 {
     NSLog(@"interstitialSuccessToLoadAd");
@@ -3074,9 +3237,7 @@ static UGameScene *sharedGameScene;
     [interstitial presentFromView:self.customInterView];
 }
 
-/**
- *  广告预加载失败
- */
+
 - (void)interstitialFailToLoadAd:(BaiduMobAdInterstitial *)interstitial
 {
     NSLog(@"interstitialFailToLoadAd");
@@ -3084,25 +3245,18 @@ static UGameScene *sharedGameScene;
     [self showAD];
 }
 
-/**
- *  广告即将展示
- */
+
 - (void)interstitialWillPresentScreen:(BaiduMobAdInterstitial *)interstitial
 {
     NSLog(@"interstitialWillPresentScreen");
 }
 
-/**
- *  广告展示成功
- */
+
 - (void)interstitialSuccessPresentScreen:(BaiduMobAdInterstitial *)interstitial
 {
     NSLog(@"interstitialSuccessPresentScreen");
 }
 
-/**
- *  广告展示失败
- */
 - (void)interstitialFailPresentScreen:(BaiduMobAdInterstitial *)interstitial withError:(BaiduMobFailReason) reason
 {
     NSLog(@"interstitialFailPresentScreen, withError: %d",reason);
@@ -3110,9 +3264,7 @@ static UGameScene *sharedGameScene;
     [self showAD];
 }
 
-/**
- *  广告展示结束
- */
+
 - (void)interstitialDidDismissScreen:(BaiduMobAdInterstitial *)interstitial
 {
     NSLog(@"interstitialDidDismissScreen");
@@ -3121,48 +3273,41 @@ static UGameScene *sharedGameScene;
     [self showAD];
 }
 
-///dijk 2016-05-21 Banner广告
-/**
- *  广告将要被载入
- */
+
 -(void) willDisplayAd:(BaiduMobAdView*) adview
 {
     NSLog(@"will display ad");
 }
 
-/**
- *  广告载入失败
- */
+
 -(void) failedDisplayAd:(BaiduMobFailReason) reason;
 {
     NSLog(@"failedDisplayAd %d", reason);
 }
 
-/**
- *  本次广告展示成功时的回调
- */
+
 -(void) didAdImpressed
 {
     NSLog(@"didAdImpressed");
 }
 
-/**
- *  本次广告展示被用户点击时的回调
- */
+
 -(void) didAdClicked
 {
     NSLog(@"didAdClicked");
 }
 
-/**
- *  在用户点击完广告条出现全屏广告页面以后，用户关闭广告时的回调
- */
+
+#pragma mark 在用户点击完广告条出现全屏广告页面以后，用户关闭广告时的回调
+
 -(void) didDismissLandingPage
 {
     NSLog(@"didDismissLandingPage");
     ///dijk 2016-05-21 显示banner广告
     [self showAD];
 }
+
+
 
 //人群属性接口
 /**
@@ -3254,13 +3399,7 @@ static UGameScene *sharedGameScene;
     }
 }
 
-//- (void) onEnterTransitionDidFinish{
-//    
-//    NSLog(@"载入中...");
-//    if (gameState == kGameStateForMenu) {
-//        [self gamePause];
-//    }
-//}
+
 
 - (void) onEnter{
     
@@ -3268,6 +3407,24 @@ static UGameScene *sharedGameScene;
     if (gameState == kGameStateForMenu) {
         [self gamePause];
     }
+    
+    
+    
+    
 }
+
+//- (void) onEnterTransitionDidFinish{
+//    
+//    [super onEnterTransitionDidFinish];
+//    if (mogoView2 == nil) {
+//        NSLog(@"========返回的是插屏广告");
+//        mogoView2 = [[AdMoGoView alloc] initWithAppKey:MoGo_ID_IPhone adType:AdViewTypeiPhoneRectangle adMoGoViewDelegate:self];
+//        mogoView2.adWebBrowswerDelegate = self;
+//        [mogoView2 setViewPointType:AdMoGoViewPointTypeMiddle_middle];
+//        [[[CCDirector sharedDirector] view] addSubview: mogoView2];
+//        
+//    }
+//}
+
 
 @end

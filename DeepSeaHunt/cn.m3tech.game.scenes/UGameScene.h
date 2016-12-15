@@ -28,7 +28,10 @@
 #import "BaiduMobAdInterstitial.h"
 #import "BaiduMobAdDelegateProtocol.h"
 #import "BaiduMobAdView.h"
-#define kTimeShowAD 20
+
+#import "AdMoGoInterstitialManager.h"
+
+#define kTimeShowAD 10
 #define kTimeWarttingAD 20
 
 #define kAppKey             @"3941824814"
@@ -43,8 +46,10 @@
 //    
 //}GameInfoRecord;
 
-@interface UGameScene : CCLayer<UShopDelegate,UInAppDelegate,BaiduMobAdInterstitialDelegate,BaiduMobAdViewDelegate>
+@interface UGameScene : CCLayer<UShopDelegate,UInAppDelegate,BaiduMobAdInterstitialDelegate,BaiduMobAdViewDelegate,AdMoGoInterstitialDelegate,AdMoGoWebBrowserControllerUserDelegate,AdMoGoDelegate>
 {
+    
+    
     int  connonLevel;
     CGSize levelTextureSize;
     CCSprite *levelLabel;
@@ -130,6 +135,12 @@
     
     ///dijk 2016-05-21 百度广告
     BaiduMobAdView* sharedAdView;
+    
+    //芒果广告视图
+    AdMoGoView * mogoView2;
+    AdMoGoView * mogoView;
+//    AdMoGoView * view_mogo_chaping;
+    
    
 }
 @property (assign) int gold;
@@ -168,4 +179,7 @@
 
 @property (nonatomic, retain) BaiduMobAdInterstitial* adInterstitial;
 @property (nonatomic, retain) UIView *customInterView;
+@property (nonatomic, retain) AdMoGoView * view_mogo_chaping;
+
+
 @end

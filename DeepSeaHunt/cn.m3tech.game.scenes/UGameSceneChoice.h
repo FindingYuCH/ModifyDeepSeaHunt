@@ -10,8 +10,9 @@
 #import "GameDefine.h"
 #import "UGameScene.h"
 #import "UShopLayer.h"
+#import "AdMoGoInterstitialManager.h"
 
-@interface UGameSceneChoice : CCLayer<UShopDelegate,UInAppDelegate>
+@interface UGameSceneChoice : CCLayer<UShopDelegate,UInAppDelegate,AdMoGoInterstitialDelegate,AdMoGoWebBrowserControllerUserDelegate,AdMoGoDelegate>
 {
     NSMutableArray *choiceArray;
     int nowSceneID;                                        //选中的场景编号
@@ -29,6 +30,9 @@
     
     int nowGold;
     CCLabelAtlas *nowGoldAtlas;
+    
+    AdMoGoView * mogo_View;
+
 }
 +(CCScene*)scene;
 
